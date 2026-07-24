@@ -9,7 +9,7 @@ export type SpringLanguage = "java" | "kotlin";
 export type SpringArchitecture = "layered" | "hexagonal";
 export type SpringWebStack = "mvc" | "webflux";
 export type SpringPersistence = "jpa" | "sqlfirst" | "r2dbc";
-export type HexagonalFlavor = "clean" | "toby";
+export type HexagonalFlavor = "clean" | "pragmatic";
 
 export type NestPersistence = "typeorm" | "prisma" | "sqlfirst";
 export type NestValidation = "classvalidator" | "zod";

@@ -19,7 +19,7 @@ const springAnswers = (target: Answers["target"], outputDir: string): Answers =>
     architecture: "hexagonal",
     webStack: "mvc",
     persistence: "jpa",
-    hexagonalFlavor: "toby",
+    hexagonalFlavor: "pragmatic",
     mongodb: false,
     queryTools: false,
     reactiveMongo: false,
@@ -54,12 +54,12 @@ describe("claude emit", () => {
     expect(files).toContain(".claude/settings.json");
     expect(files.some((f) => f.startsWith(".claude/agents/spring-hexagonal-"))).toBe(true);
     expect(files.some((f) => f.startsWith(".claude/commands/rw/"))).toBe(true);
-    // toby rename landed at canonical name
+    // pragmatic rename landed at canonical name
     expect(files).toContain(".claude/rules/backend/spring/kotlin/hexagonal/domain.md");
-    // and its content is the toby variant (domain-entity source)
+    // and its content is the pragmatic variant (domain-entity source)
     const domain = readFileSync(path.join(dir, ".claude/rules/backend/spring/kotlin/hexagonal/domain.md"), "utf8");
-    const tobySrc = readFileSync(path.join(BASE, "rules/backend/spring/kotlin/hexagonal/domain-entity.md"), "utf8");
-    expect(domain).toBe(tobySrc);
+    const pragmaticSrc = readFileSync(path.join(BASE, "rules/backend/spring/kotlin/hexagonal/domain-entity.md"), "utf8");
+    expect(domain).toBe(pragmaticSrc);
   });
 });
 
