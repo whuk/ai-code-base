@@ -11,7 +11,7 @@
     "templates"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && chmod +x dist/bin/index.js",
     "dev": "tsx src/bin/index.ts",
     "test": "vitest run",
     "test:watch": "vitest"

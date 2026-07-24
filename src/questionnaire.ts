@@ -171,7 +171,7 @@ async function askSpring(): Promise<SpringAnswers> {
         message: "헥사고날 flavor는 무엇입니까?",
         options: [
           { value: "clean", label: "Clean (엄격, 기본)" },
-          { value: "toby", label: "Toby (splearn식)" },
+          { value: "pragmatic", label: "Pragmatic (실용)" },
         ],
       }),
     );

@@ -162,7 +162,7 @@ function pruneSpring(s: Selector, a: Answers): void {
 
   if (arch === "layered") {
     s.removePrefix(`${langDir}/hexagonal/`);
-    s.removeFile(`${SPRING}/api-code-first.md`); // code-first web is Toby(Hexagonal)-only
+    s.removeFile(`${SPRING}/api-code-first.md`); // code-first web is Pragmatic(Hexagonal)-only
     s.removeFiles(SPRING_HEXAGONAL_AGENTS);
   } else {
     s.removePrefix(`${langDir}/layered/`);
@@ -266,34 +266,34 @@ function pruneSpringPersistence(
 function pruneHexagonalFlavor(s: Selector, a: Answers, langDir: string): void {
   const sp = a.spring!;
   const hexDir = `${langDir}/hexagonal`;
-  // Toby is only possible for JPA + MVC; every other hexagonal combo is Clean-fixed.
-  const toby = sp.persistence === "jpa" && sp.webStack === "mvc" && sp.hexagonalFlavor === "toby";
+  // Pragmatic is only possible for JPA + MVC; every other hexagonal combo is Clean-fixed.
+  const pragmatic = sp.persistence === "jpa" && sp.webStack === "mvc" && sp.hexagonalFlavor === "pragmatic";
 
-  if (!toby) {
-    // Clean: drop Toby variants and code-first web spec.
+  if (!pragmatic) {
+    // Clean: drop Pragmatic variants and code-first web spec.
     s.removeFile(`${hexDir}/domain-entity.md`);
-    s.removeFile(`${hexDir}/ports-and-adapters-toby.md`);
-    s.removeFile(`${hexDir}/repository-toby.md`);
-    s.removeFile(`${hexDir}/service-layer-toby.md`);
-    s.removeFile(`${hexDir}/test-toby.md`);
+    s.removeFile(`${hexDir}/ports-and-adapters-pragmatic.md`);
+    s.removeFile(`${hexDir}/repository-pragmatic.md`);
+    s.removeFile(`${hexDir}/service-layer-pragmatic.md`);
+    s.removeFile(`${hexDir}/test-pragmatic.md`);
     s.removeFile(`${SPRING}/api-code-first.md`);
   } else {
-    // Toby: drop Clean regulars, rename Toby variants into canonical names.
+    // Pragmatic: drop Clean regulars, rename Pragmatic variants into canonical names.
     s.removeFile(`${hexDir}/domain.md`);
     s.rename(`${hexDir}/domain-entity.md`, `${hexDir}/domain.md`);
     s.removeFile(`${hexDir}/ports-and-adapters.md`);
-    s.rename(`${hexDir}/ports-and-adapters-toby.md`, `${hexDir}/ports-and-adapters.md`);
+    s.rename(`${hexDir}/ports-and-adapters-pragmatic.md`, `${hexDir}/ports-and-adapters.md`);
     s.removeFile(`${hexDir}/repository.md`);
-    s.rename(`${hexDir}/repository-toby.md`, `${hexDir}/repository.md`);
+    s.rename(`${hexDir}/repository-pragmatic.md`, `${hexDir}/repository.md`);
     s.removeFile(`${hexDir}/service-layer.md`);
-    s.rename(`${hexDir}/service-layer-toby.md`, `${hexDir}/service-layer.md`);
+    s.rename(`${hexDir}/service-layer-pragmatic.md`, `${hexDir}/service-layer.md`);
     s.removeFile(`${hexDir}/test.md`);
-    s.rename(`${hexDir}/test-toby.md`, `${hexDir}/test.md`);
+    s.rename(`${hexDir}/test-pragmatic.md`, `${hexDir}/test.md`);
     // Web: spec-first api-dto removed, code-first kept.
     s.removeFile(`${SPRING}/api-dto.md`);
     if (sp.mongodb) {
       s.notice(
-        "Toby flavor + MongoDB: test-mongodb.md의 통합 base class 표는 Clean 기준 서술입니다. Toby의 통합 테스트 관례(test.md 2.2)와 함께 읽으세요.",
+        "Pragmatic flavor + MongoDB: test-mongodb.md의 통합 base class 표는 Clean 기준 서술입니다. Pragmatic의 통합 테스트 관례(test.md 2.2)와 함께 읽으세요.",
       );
     }
   }

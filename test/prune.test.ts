@@ -103,7 +103,7 @@ describe("Spring Java Layered JPA MVC (mongo off, spec-only, postgres)", () => {
   });
 });
 
-describe("Spring Kotlin Hexagonal JPA MVC Toby (mongo on)", () => {
+describe("Spring Kotlin Hexagonal JPA MVC Pragmatic (mongo on)", () => {
   const a: Answers = {
     area: "backend",
     backend: "spring",
@@ -112,7 +112,7 @@ describe("Spring Kotlin Hexagonal JPA MVC Toby (mongo on)", () => {
       architecture: "hexagonal",
       webStack: "mvc",
       persistence: "jpa",
-      hexagonalFlavor: "toby",
+      hexagonalFlavor: "pragmatic",
       mongodb: true,
       queryTools: false,
       reactiveMongo: false,
@@ -120,18 +120,18 @@ describe("Spring Kotlin Hexagonal JPA MVC Toby (mongo on)", () => {
     },
     ...out,
   };
-  it("renames toby variants to canonical, drops clean + api-dto, keeps api-code-first", () => {
+  it("renames pragmatic variants to canonical, drops clean + api-dto, keeps api-code-first", () => {
     const r = prune(a, manifest);
     const o = new Set([...r.keep, ...r.renames.map((x) => x.to)]);
     const hex = "rules/backend/spring/kotlin/hexagonal";
-    // toby renames present
+    // pragmatic renames present
     const renamed = Object.fromEntries(r.renames.map((x) => [x.to, x.from]));
     expect(renamed[`${hex}/domain.md`]).toBe(`${hex}/domain-entity.md`);
-    expect(renamed[`${hex}/repository.md`]).toBe(`${hex}/repository-toby.md`);
-    expect(renamed[`${hex}/test.md`]).toBe(`${hex}/test-toby.md`);
-    // clean originals + toby leftovers not in output as separate files
+    expect(renamed[`${hex}/repository.md`]).toBe(`${hex}/repository-pragmatic.md`);
+    expect(renamed[`${hex}/test.md`]).toBe(`${hex}/test-pragmatic.md`);
+    // clean originals + pragmatic leftovers not in output as separate files
     expect(o).not.toContain(`${hex}/domain-entity.md`);
-    expect(o).not.toContain(`${hex}/ports-and-adapters-toby.md`);
+    expect(o).not.toContain(`${hex}/ports-and-adapters-pragmatic.md`);
     // web: spec-first removed, code-first kept
     expect(o).not.toContain("rules/backend/spring/api-dto.md");
     expect(o).toContain("rules/backend/spring/api-code-first.md");
@@ -139,7 +139,7 @@ describe("Spring Kotlin Hexagonal JPA MVC Toby (mongo on)", () => {
     expect([...o].some((f) => f.includes("spring/java/"))).toBe(false);
     // mongo on: test-mongodb kept + notice
     expect(o).toContain(`${hex}/test-mongodb.md`);
-    expect(r.notices.some((n) => n.includes("Toby") && n.includes("MongoDB"))).toBe(true);
+    expect(r.notices.some((n) => n.includes("Pragmatic") && n.includes("MongoDB"))).toBe(true);
     // hexagonal agents kept, layered removed
     expect(o).toContain("agents/spring-hexagonal-tdd-implementer.md");
     expect(o).not.toContain("agents/spring-tdd-implementer.md");
@@ -162,14 +162,14 @@ describe("Spring Java Hexagonal SQL-first MVC (clean fixed)", () => {
     },
     ...out,
   };
-  it("keeps repository-sql, drops repository.md + tools + toby variants + api-code-first", () => {
+  it("keeps repository-sql, drops repository.md + tools + pragmatic variants + api-code-first", () => {
     const o = outputs(a);
     const hex = "rules/backend/spring/java/hexagonal";
     expect(o).toContain("rules/backend/spring/java/repository-sql.md");
     expect(o).not.toContain(`${hex}/repository.md`);
     expect(o).not.toContain("rules/backend/spring/java/repository-tools.md");
-    // clean fixed: toby variants gone, code-first gone, api-dto kept
-    expect(o).not.toContain(`${hex}/repository-toby.md`);
+    // clean fixed: pragmatic variants gone, code-first gone, api-dto kept
+    expect(o).not.toContain(`${hex}/repository-pragmatic.md`);
     expect(o).not.toContain("rules/backend/spring/api-code-first.md");
     expect(o).toContain("rules/backend/spring/api-dto.md");
     // clean regulars kept
