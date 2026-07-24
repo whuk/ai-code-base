@@ -1,0 +1,31 @@
+---
+description: JPA + MongoDB 병용 프로젝트의 MongoDB 통합 테스트 base class 규칙 (Hexagonal, test.md 추가분)
+globs: "**/src/test/**"
+---
+
+# 테스트 작성 규칙 (Hexagonal) — MongoDB 추가분
+
+`test.md`의 계층별 테스트 전략과 base class 규칙을 전제로, JPA와 MongoDB를 **함께 사용하는** 프로젝트에서 MongoDB를 사용하는 도메인의 통합 테스트에만 추가로 적용되는 규칙이다.
+
+이 프로젝트가 MongoDB를 사용하지 않는다면(JPA만 사용) 이 파일은 적용 대상이 아니다. MongoDB 사용 여부는 프로젝트 시작 시점에 고정하므로, 사용하지 않는 프로젝트는 이 파일을 프로젝트에서 제외한다. Layered를 채택했다면 `layered/test-mongodb.md`, Kotlin을 채택했다면 `kotlin/hexagonal/test-mongodb.md`를 참조한다(실제로 채택하지 않은 아키텍처/언어의 규칙 파일은 프로젝트에서 제외한다).
+
+WebFlux(리액티브 스택) + 리액티브 MongoDB 프로젝트는 여기의 MongoDB 포함 base class를 리액티브 구성으로 대체해 읽는다(`repository-reactive-mongo.md` 4번, `webflux.md` 8번의 접두사 대체 규정과 동일한 방식).
+
+## 1. MongoDB 통합 테스트 (전체 컨텍스트)
+
+- Persistence Adapter 테스트는 `IntegrationTestBase`, Web Adapter 테스트는 `WebIntegrationTestBase`를 상속한다.
+- H2 + Embedded MongoDB를 모두 로드한다.
+- MongoDB를 사용하는 도메인(Aggregate)의 Persistence Adapter/Controller 테스트에 해당한다. `test.md` 2.4의 Web Adapter 테스트도 MongoDB 포함 도메인이면 `WebIntegrationTestBase`를 상속한다.
+
+## 2. base class 구조 (MongoDB)
+
+`test.md` 3번의 JPA 전용 base class에 더해, MongoDB 포함 테스트에는 다음 base class를 사용한다.
+
+| base class | 용도 | 로드 범위 |
+|---|---|---|
+| `IntegrationTestBase` | MongoDB 포함 Persistence Adapter 테스트 | 전체 컨텍스트 (H2 + MongoDB) |
+| `WebIntegrationTestBase` | MongoDB 포함 Web Adapter 테스트 | 전체 컨텍스트 + MockMvc |
+
+## 3. 금지 패턴
+
+- JPA 엔티티만 사용하는(MongoDB를 쓰지 않는) 도메인의 테스트에서 `IntegrationTestBase` 또는 `WebIntegrationTestBase`를 상속하지 않는다. 이 경우 `test.md`의 `Jpa*` base class를 사용한다.

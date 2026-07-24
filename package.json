@@ -1,0 +1,33 @@
+{
+  "name": "rw-base",
+  "version": "0.1.0",
+  "description": "Scaffold TDD/Tidy-First coding-agent rules, agents and commands for Claude Code, Gemini CLI or Codex CLI.",
+  "type": "module",
+  "bin": {
+    "rw-base": "dist/bin/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/bin/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "@iarna/toml": "^2.2.5",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  }
+}
