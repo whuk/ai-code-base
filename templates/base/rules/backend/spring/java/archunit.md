@@ -48,9 +48,9 @@ SlicesRuleDefinition.slices()
 
 - `application` 슬라이스에도 동일하게 순환 금지 규칙을 적용한다.
 
-## 4. 애그리거트 간 참조 규율 (Toby flavor 전용)
+## 4. 애그리거트 간 참조 규율 (Pragmatic flavor 전용)
 
-- Toby flavor(도메인=엔티티, 애그리거트 간 객체 참조 허용, `domain.md` 6번)에서는 다른 슬라이스에 대해 **조회 메서드만 호출**하도록 커스텀 `ArchCondition`으로 강제한다: 대상이 다른 슬라이스에 속하고 `record`/`enum`이 아니면, 호출 메서드명이 `get`/`is`/`ensure`로 시작하는 것만 허용한다.
+- Pragmatic flavor(도메인=엔티티, 애그리거트 간 객체 참조 허용, `domain.md` 6번)에서는 다른 슬라이스에 대해 **조회 메서드만 호출**하도록 커스텀 `ArchCondition`으로 강제한다: 대상이 다른 슬라이스에 속하고 `record`/`enum`이 아니면, 호출 메서드명이 `get`/`is`/`ensure`로 시작하는 것만 허용한다.
 - Clean flavor에서는 애그리거트 간 참조를 ID로만 하므로(`domain.md` 6번) 이 규칙을 적용하지 않는다(2.1의 계층 규칙 + 3의 순환 금지로 충분하다).
 
 ## 5. 배치

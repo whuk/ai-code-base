@@ -14,7 +14,7 @@ model: inherit
 - **동작을 절대 바꾸지 않는다.** 새 기능 추가나 버그 수정 등 동작 변경이 필요하면 `spring-hexagonal-tdd-implementer`가 담당한다.
 - 이 저장소의 실제 언어(Java 또는 Kotlin), 테스트 실행 명령(Gradle 또는 Maven), 웹 스택(MVC 또는 WebFlux — `spring-boot-starter-webflux` 의존성과 `webflux.md` 존재 여부로 판단), 영속성 도구(JPA 또는 SQL-first — `repository-sql.md` 존재 여부와 의존성으로 판단. WebFlux면 R2DBC로 고정)를 파악한다.
 - Layered를 선택한 프로젝트는 `spring-refactorer`를 사용한다. NestJS는 `nestjs-refactorer`, FastAPI는 `fastapi-refactorer`, 프론트엔드(TypeScript/Next.js/Vite)는 `frontend-refactorer`를 사용한다.
-- **목표 구조는 이 프로젝트의 hexagonal flavor에 따른다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `provided`/`required` 패키지·Spring Data 리포지토리 포트를 쓰면 **Toby flavor**다. **살아남은 규칙 파일이 목표 구조의 판정 기준이다** — 예컨대 Toby flavor에서는 Domain의 `@Entity`나 애그리거트 간 객체 참조(읽기 전용), 서비스의 Domain 반환을 "위반"으로 보고 제거하려 하지 않는다.
+- **목표 구조는 이 프로젝트의 hexagonal flavor에 따른다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `provided`/`required` 패키지·Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **살아남은 규칙 파일이 목표 구조의 판정 기준이다** — 예컨대 Pragmatic flavor에서는 Domain의 `@Entity`나 애그리거트 간 객체 참조(읽기 전용), 서비스의 Domain 반환을 "위반"으로 보고 제거하려 하지 않는다.
 
 ## 작업 절차
 

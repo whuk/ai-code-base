@@ -35,7 +35,7 @@ claude-code-base 템플릿을 실제 프로젝트 스택에 맞게 선별 적용
 - 웹 스택: `spring-boot-starter-webflux`만 있고 `spring-boot-starter-web`이 없으면 WebFlux / `spring-boot-starter-web`이 있으면 MVC
 - 영속성 도구: `spring-boot-starter-data-jpa` → JPA / JPA 없이 `spring-boot-starter-jdbc`(+`jooq`) → SQL-first / `spring-boot-starter-data-r2dbc` → WebFlux 감지 결과와 교차 확인해 R2DBC로 확정
 - 아키텍처 스타일: 소스 패키지에 `port/in`·`port/out`·`adapter` 디렉토리 또는 `*UseCase`/`*Port`/`*PersistenceAdapter` 클래스 → Hexagonal / controller·service·repository·domain 계층 패키지 구조 → Layered. 소스가 거의 없어 구조 판정이 어려우면 미확정
-- 헥사고날 flavor (Hexagonal + JPA + MVC일 때만, 언어 Java/Kotlin 모두): 도메인 클래스에 `@Entity`가 붙어 있고 `application/**/provided`·`required` 패키지 또는 `@ApplicationService`/`@WebApiAdapter` stereotype이 있으며 `openapi.yaml`이 없으면 → Toby / `port/in`·`port/out` 패키지와 `*PersistenceAdapter`·`*JpaEntity` 클래스, `openapi.yaml`이 있으면 → Clean. 근거가 없으면 미확정. (WebFlux·SQL-first면 flavor를 감지하지 않고 Clean으로 고정 — Toby는 Hexagonal+JPA+MVC 전용. Kotlin은 항상 MVC이므로 Hexagonal+JPA면 대상이다.)
+- 헥사고날 flavor (Hexagonal + JPA + MVC일 때만, 언어 Java/Kotlin 모두): 도메인 클래스에 `@Entity`가 붙어 있고 `application/**/provided`·`required` 패키지 또는 `@ApplicationService`/`@WebApiAdapter` stereotype이 있으며 `openapi.yaml`이 없으면 → Pragmatic / `port/in`·`port/out` 패키지와 `*PersistenceAdapter`·`*JpaEntity` 클래스, `openapi.yaml`이 있으면 → Clean. 근거가 없으면 미확정. (WebFlux·SQL-first면 flavor를 감지하지 않고 Clean으로 고정 — Pragmatic은 Hexagonal+JPA+MVC 전용. Kotlin은 항상 MVC이므로 Hexagonal+JPA면 대상이다.)
 - MongoDB: `spring-boot-starter-data-mongodb`(WebFlux면 `-reactive`) 존재 여부로 확정
 - QueryDSL/jOOQ 계획: `querydsl`/`jooq` 의존성이 이미 있으면 "쓸 계획 있음"으로 확정. 없으면 미확정(도입 계획은 코드로 감지할 수 없다)
 - 주 RDB: JDBC/R2DBC 드라이버 의존성(`postgresql`/`mysql`/`mariadb`/`sqlite` 등) 또는 `application.yml`·`application.properties`의 datasource/r2dbc URL 스킴
@@ -70,7 +70,7 @@ claude-code-base 템플릿을 실제 프로젝트 스택에 맞게 선별 적용
 (백엔드 스택 "Spring Boot" 선택 시)
 - "언어는 무엇입니까?" → Java(기본) / Kotlin
 - "아키텍처 스타일은 무엇입니까?" → Layered(기본) / Hexagonal(Ports & Adapters)
-- (아키텍처 "Hexagonal" + 영속성 "JPA" + 웹 스택 "Spring MVC"인 경우에만, 언어 Java/Kotlin 모두) "헥사고날 flavor는 무엇입니까?" → Clean(엄격, 기본) / Toby(splearn식). Toby는 도메인=JPA 엔티티(orm.xml)·`provided`/`required` 역할 포트·Spring Data 리포지토리를 드리븐 포트로·서비스/컨트롤러의 Domain 반환·애그리거트 간 객체 참조(읽기 전용)·code-first 웹·애플리케이션 서비스 통합 테스트·ArchUnit을 한 세트로 묶은 실용 헥사고날이다. WebFlux·SQL-first 조합에서는 이 질문을 하지 않고 Clean으로 고정한다(Toby 변형은 Hexagonal+JPA+MVC 전용). Kotlin은 항상 Spring MVC이므로 Hexagonal+JPA면 이 질문을 한다.
+- (아키텍처 "Hexagonal" + 영속성 "JPA" + 웹 스택 "Spring MVC"인 경우에만, 언어 Java/Kotlin 모두) "헥사고날 flavor는 무엇입니까?" → Clean(엄격, 기본) / Pragmatic(실용). Pragmatic은 도메인=JPA 엔티티(orm.xml)·`provided`/`required` 역할 포트·Spring Data 리포지토리를 드리븐 포트로·서비스/컨트롤러의 Domain 반환·애그리거트 간 객체 참조(읽기 전용)·code-first 웹·애플리케이션 서비스 통합 테스트·ArchUnit을 한 세트로 묶은 실용 헥사고날이다. WebFlux·SQL-first 조합에서는 이 질문을 하지 않고 Clean으로 고정한다(Pragmatic 변형은 Hexagonal+JPA+MVC 전용). Kotlin은 항상 Spring MVC이므로 Hexagonal+JPA면 이 질문을 한다.
 - (언어 "Java" 선택 시) "웹 스택은 무엇입니까?" → Spring MVC(서블릿, 기본) / WebFlux(리액티브). WebFlux 규칙은 현재 Java 전용이므로 Kotlin 선택 시 이 질문은 묻지 않고 MVC로 간주한다
 - (웹 스택이 "Spring MVC"인 경우에만) "영속성 도구는 무엇입니까?" → JPA(ORM, 기본) / SQL-first(JdbcClient + jOOQ, ORM 미사용). WebFlux 선택 시 영속성은 R2DBC로 고정되므로 이 질문과 아래 JPA 세부 질문 2개를 묻지 않는다
 - (영속성 도구 "JPA" 선택 시) "MongoDB도 함께 사용합니까?" → JPA만 사용(기본) / JPA + MongoDB 함께 사용
@@ -111,11 +111,11 @@ Next.js/Vue.js를 선택한 경우 프론트엔드 세부 질문은 없다.
 - `.claude/rules/backend/spring/kotlin/` 전체 (`spring/java/`, `spring/api-dto.md`는 유지)
 
 ### 백엔드 스택 "Spring Boot" + 언어 "Kotlin" 선택 시 — 삭제
-- `.claude/rules/backend/spring/java/` 전체 (`spring/kotlin/`, `spring/api-dto.md`는 유지). Kotlin은 `spring/kotlin/`의 hexagonal Toby 변형과 `spring/kotlin/archunit.md`를 사용한다. 언어 공통인 `spring/api-code-first.md`는 flavor/아키텍처 절에서 처리한다(여기서 삭제하지 않는다).
+- `.claude/rules/backend/spring/java/` 전체 (`spring/kotlin/`, `spring/api-dto.md`는 유지). Kotlin은 `spring/kotlin/`의 hexagonal Pragmatic 변형과 `spring/kotlin/archunit.md`를 사용한다. 언어 공통인 `spring/api-code-first.md`는 flavor/아키텍처 절에서 처리한다(여기서 삭제하지 않는다).
 
 ### 백엔드 스택 "Spring Boot" + 아키텍처 스타일 "Layered" 선택 시 — 삭제
-- 선택한 언어 디렉토리의 `.claude/rules/backend/spring/{java|kotlin}/hexagonal/` 전체 (`spring/{java|kotlin}/layered/`, 아키텍처 공통인 `spring/{java|kotlin}/repository-tools.md`, `spring/api-dto.md`는 유지. 아키텍처 공통인 `spring/{java|kotlin}/archunit.md`도 유지 — ArchUnit은 Layered에도 적용된다. `hexagonal/` 삭제에 Toby 변형 파일도 함께 포함된다)
-- `.claude/rules/backend/spring/api-code-first.md` (코드-first 웹 계층은 Toby(Hexagonal) flavor 전용이다)
+- 선택한 언어 디렉토리의 `.claude/rules/backend/spring/{java|kotlin}/hexagonal/` 전체 (`spring/{java|kotlin}/layered/`, 아키텍처 공통인 `spring/{java|kotlin}/repository-tools.md`, `spring/api-dto.md`는 유지. 아키텍처 공통인 `spring/{java|kotlin}/archunit.md`도 유지 — ArchUnit은 Layered에도 적용된다. `hexagonal/` 삭제에 Pragmatic 변형 파일도 함께 포함된다)
+- `.claude/rules/backend/spring/api-code-first.md` (코드-first 웹 계층은 Pragmatic(Hexagonal) flavor 전용이다)
 - Hexagonal 전담 에이전트 6개: `.claude/agents/spring-hexagonal-*.md`
 
 ### 백엔드 스택 "Spring Boot" + 아키텍처 스타일 "Hexagonal" 선택 시 — 삭제
@@ -124,19 +124,19 @@ Next.js/Vue.js를 선택한 경우 프론트엔드 세부 질문은 없다.
 
 ### 백엔드 스택 "Spring Boot" + 아키텍처 "Hexagonal" + JPA + MVC + flavor 선택 시 — 삭제/rename
 
-Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}/`)의 `hexagonal/`에는 Clean 파일과 Toby 변형 파일이 함께 들어 있다. flavor에 맞는 한 벌만 남긴다(Java·Kotlin 동일하게 적용). flavor를 묻지 않은 조합(WebFlux·SQL-first)은 자동으로 **Clean**으로 간주해 아래 'Clean 선택' 처리를 적용한다. 아래 경로의 `{java|kotlin}`은 선택한 언어로 치환한다.
+Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}/`)의 `hexagonal/`에는 Clean 파일과 Pragmatic 변형 파일이 함께 들어 있다. flavor에 맞는 한 벌만 남긴다(Java·Kotlin 동일하게 적용). flavor를 묻지 않은 조합(WebFlux·SQL-first)은 자동으로 **Clean**으로 간주해 아래 'Clean 선택' 처리를 적용한다. 아래 경로의 `{java|kotlin}`은 선택한 언어로 치환한다.
 
-- **Clean 선택 시**: Toby 변형 파일을 `git rm`한다 — `spring/{java|kotlin}/hexagonal/domain-entity.md`, `hexagonal/ports-and-adapters-toby.md`, `hexagonal/repository-toby.md`, `hexagonal/service-layer-toby.md`, `hexagonal/test-toby.md`, `spring/api-code-first.md`. Clean 정규 파일(`domain.md`·`ports-and-adapters.md`·`repository.md`·`service-layer.md`·`test.md`)과 `spring/api-dto.md`, `spring/{java|kotlin}/archunit.md`는 유지한다.
-- **Toby 선택 시**: Clean 정규 파일을 `git rm`한 뒤 Toby 변형을 `git mv`로 정규 이름에 맞춰 rename한다(본문 무편집):
+- **Clean 선택 시**: Pragmatic 변형 파일을 `git rm`한다 — `spring/{java|kotlin}/hexagonal/domain-entity.md`, `hexagonal/ports-and-adapters-pragmatic.md`, `hexagonal/repository-pragmatic.md`, `hexagonal/service-layer-pragmatic.md`, `hexagonal/test-pragmatic.md`, `spring/api-code-first.md`. Clean 정규 파일(`domain.md`·`ports-and-adapters.md`·`repository.md`·`service-layer.md`·`test.md`)과 `spring/api-dto.md`, `spring/{java|kotlin}/archunit.md`는 유지한다.
+- **Pragmatic 선택 시**: Clean 정규 파일을 `git rm`한 뒤 Pragmatic 변형을 `git mv`로 정규 이름에 맞춰 rename한다(본문 무편집):
   - `git rm spring/{java|kotlin}/hexagonal/domain.md` → `git mv .../domain-entity.md .../domain.md`
-  - `git rm .../ports-and-adapters.md` → `git mv .../ports-and-adapters-toby.md .../ports-and-adapters.md`
-  - `git rm .../repository.md` → `git mv .../repository-toby.md .../repository.md`
-  - `git rm .../service-layer.md` → `git mv .../service-layer-toby.md .../service-layer.md`
-  - `git rm .../test.md` → `git mv .../test-toby.md .../test.md`
+  - `git rm .../ports-and-adapters.md` → `git mv .../ports-and-adapters-pragmatic.md .../ports-and-adapters.md`
+  - `git rm .../repository.md` → `git mv .../repository-pragmatic.md .../repository.md`
+  - `git rm .../service-layer.md` → `git mv .../service-layer-pragmatic.md .../service-layer.md`
+  - `git rm .../test.md` → `git mv .../test-pragmatic.md .../test.md`
   - 웹 계층: `git rm spring/api-dto.md` (spec-first 제거), `spring/api-code-first.md`는 정규 이름 그대로 유지.
   - `spring/{java|kotlin}/archunit.md`는 유지한다.
-- **에이전트는 flavor로 삭제하지 않는다.** `spring-hexagonal-*` 6개는 살아남은 정규 규칙 파일을 읽어 flavor(Clean/Toby)를 판정하도록 일반화돼 있다(언어·flavor 무관). 4단계 보고에서 선택한 flavor를 명시한다.
-- (Toby + MongoDB 병용 시) MongoDB 테스트 추가분(`hexagonal/test-mongodb.md`)에는 Toby 전용 변형이 없다. `test-mongodb.md`는 유지하되, 4단계 보고에서 "MongoDB 통합 base class 표는 Clean 기준 서술이며 Toby의 통합 테스트 관례(`test.md` 2.2)와 함께 읽어야 한다"고 안내한다.
+- **에이전트는 flavor로 삭제하지 않는다.** `spring-hexagonal-*` 6개는 살아남은 정규 규칙 파일을 읽어 flavor(Clean/Pragmatic)를 판정하도록 일반화돼 있다(언어·flavor 무관). 4단계 보고에서 선택한 flavor를 명시한다.
+- (Pragmatic + MongoDB 병용 시) MongoDB 테스트 추가분(`hexagonal/test-mongodb.md`)에는 Pragmatic 전용 변형이 없다. `test-mongodb.md`는 유지하되, 4단계 보고에서 "MongoDB 통합 base class 표는 Clean 기준 서술이며 Pragmatic의 통합 테스트 관례(`test.md` 2.2)와 함께 읽어야 한다"고 안내한다.
 
 ### 백엔드 스택 "Spring Boot" + 언어 "Java" + 웹 스택 "Spring MVC" 선택 시 — 삭제
 - `.claude/rules/backend/spring/java/webflux.md`, `.claude/rules/backend/spring/java/repository-r2dbc.md`, `.claude/rules/backend/spring/java/repository-reactive-mongo.md` (WebFlux 전용 규칙. 언어 "Kotlin" 선택 시에는 `spring/java/` 전체 삭제에 이미 포함되므로 별도 처리가 없다)
@@ -246,11 +246,11 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 
 ## 결과 보고
 
-- 선택된 스택 조합 요약 (영역, 백엔드 스택·언어·아키텍처·헥사고날 flavor(Hexagonal+JPA+MVC일 때 Clean/Toby, Java·Kotlin 모두)·주 RDB, 프론트엔드 프레임워크 등)
+- 선택된 스택 조합 요약 (영역, 백엔드 스택·언어·아키텍처·헥사고날 flavor(Hexagonal+JPA+MVC일 때 Clean/Pragmatic, Java·Kotlin 모두)·주 RDB, 프론트엔드 프레임워크 등)
 - 자동 감지 모드였던 경우: 자동 확정한 항목과 항목별 감지 근거, 질문으로 보완한 항목 목록
 - 삭제한 파일/디렉토리 목록과 rename한 파일 목록(분리 파일 → 정규 이름). rules 파일 본문은 편집하지 않았음을 함께 명시한다
 - 해당 시 에이전트 안내문 (NestJS+Zod, JPA만, Specification까지만 선택 시의 에이전트 미수정 안내)
-- 해당 시 헥사고날 flavor 안내 (Toby 선택 시: rename한 정규 파일과 제거한 spec-first `api-dto.md`, `spring-hexagonal-*` 에이전트는 flavor를 규칙에서 읽어 동작하므로 삭제하지 않았음. Toby+MongoDB면 `test-mongodb.md` 참조 방식 안내)
+- 해당 시 헥사고날 flavor 안내 (Pragmatic 선택 시: rename한 정규 파일과 제거한 spec-first `api-dto.md`, `spring-hexagonal-*` 에이전트는 flavor를 규칙에서 읽어 동작하므로 삭제하지 않았음. Pragmatic+MongoDB면 `test-mongodb.md` 참조 방식 안내)
 - 해당 시 ArchUnit 안내 (Java·Kotlin 모두 `spring/{java|kotlin}/archunit.md`가 Layered/Hexagonal 양쪽에 유지되어 아키텍처 테스트 강제 대상임)
 - 해당 시 RDB 안내문 (PostgreSQL 외 DB 선택 시: 예시가 PostgreSQL/asyncpg 기준이므로 jOOQ 방언 상수·드라이버를 직접 교체하라는 안내. Oracle·SQL Server처럼 jOOQ 상용 에디션 방언이 필요한 경우 그 사실도 함께)
 - 해당 시 풀스택 NestJS glob 안내문 (frontend globs가 백엔드 TS에도 매칭될 수 있으니 필요하면 프론트엔드 소스 루트로 직접 좁히라는 안내)

@@ -1,10 +1,10 @@
-# Repository 규칙 (Hexagonal — Toby flavor, Kotlin)
+# Repository 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
 
-드리븐 포트로서의 영속성 리포지토리 작성 규칙을 다룬다. 이 파일은 Toby(splearn식) flavor의 Kotlin 버전으로, **Spring Data `Repository<Domain, Long>`를 곧 `required` 드리븐 포트로** 사용한다. 적용 대상은 Domain 클래스 자체다(도메인=엔티티, `domain.md`).
+드리븐 포트로서의 영속성 리포지토리 작성 규칙을 다룬다. 이 파일은 Pragmatic(실용) flavor의 Kotlin 버전으로, **Spring Data `Repository<Domain, Long>`를 곧 `required` 드리븐 포트로** 사용한다. 적용 대상은 Domain 클래스 자체다(도메인=엔티티, `domain.md`).
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 `{Domain}JpaEntity` + `{Domain}PersistenceAdapter` + `{Domain}JpaRepository`로 분리하는 버전(`repository.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`repository.md`)으로 남긴다.
 
-이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/repository-toby.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다.
+이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/repository-pragmatic.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다.
 
 ## 1. 핵심 원칙
 

@@ -1,10 +1,10 @@
-# Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Toby flavor, Kotlin)
+# Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
 
-`application/{aggregate}` 슬라이스 루트의 서비스 구현 클래스 작성 규칙이다. 이 파일은 Toby(splearn식) flavor의 Kotlin 버전으로, 역할 기반 `provided` 포트를 구현하는 `{Aggregate}{책임}Service`와 커스텀 stereotype 관용구를 다룬다.
+`application/{aggregate}` 슬라이스 루트의 서비스 구현 클래스 작성 규칙이다. 이 파일은 Pragmatic(실용) flavor의 Kotlin 버전으로, 역할 기반 `provided` 포트를 구현하는 `{Aggregate}{책임}Service`와 커스텀 stereotype 관용구를 다룬다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 `{Domain}Service`/`{Domain}Finder`가 `{Domain}CommandUseCase`/`{Domain}QueryUseCase`를 구현하는 버전(`service-layer.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`service-layer.md`)으로 남긴다.
 
-이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/service-layer-toby.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다.
+이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/service-layer-pragmatic.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다.
 
 ## 1. 핵심 원칙
 

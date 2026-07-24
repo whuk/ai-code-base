@@ -1,18 +1,18 @@
-# Ports & Adapters 구조 규칙 (Hexagonal — Toby flavor, Kotlin)
+# Ports & Adapters 구조 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
 
-Controller, Application Service, Domain, Persistence 간의 의존 방향과 데이터 전달 규칙을 정의한다. 이 파일은 Toby(splearn식) flavor의 Kotlin 버전으로, `provided`/`required` 포트 관용구와 역할 기반 세분 포트, Spring Data 리포지토리를 곧 드리븐 포트로 쓰는 실용 헥사고날을 다룬다.
+Controller, Application Service, Domain, Persistence 간의 의존 방향과 데이터 전달 규칙을 정의한다. 이 파일은 Pragmatic(실용) flavor의 Kotlin 버전으로, `provided`/`required` 포트 관용구와 역할 기반 세분 포트, Spring Data 리포지토리를 곧 드리븐 포트로 쓰는 실용 헥사고날을 다룬다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 `port/in`·`port/out` + `{Domain}CommandUseCase`/`{Domain}QueryUseCase` + 별도 `{Domain}PersistenceAdapter`를 쓰는 버전(`ports-and-adapters.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`ports-and-adapters.md`)으로 남긴다.
 
-이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/ports-and-adapters-toby.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다(Toby flavor는 Hexagonal + JPA + Spring MVC 전용).
+이 프로젝트가 Java를 채택했다면 적용 대상이 아니다(`java/hexagonal/ports-and-adapters-pragmatic.md`). Layered/SQL-first/WebFlux를 채택했다면 적용 대상이 아니다(Pragmatic flavor는 Hexagonal + JPA + Spring MVC 전용).
 
 ## 0. shared/architecture.md 조항 완화 선언
 
 이 flavor는 `shared/architecture.md`의 다음 조항을 **국소적으로 완화·대체**한다(이 파일이 우선한다):
 
-- **1번·10번(Read 흐름 Read DTO 매핑 / Query에서 Domain 반환 금지)**: Toby는 조회 흐름에서 Domain 객체를 그대로 반환할 수 있다(4번).
-- **2번(Command 반환 = 생성 ID / 수정·삭제 Unit)**: Toby는 서비스가 변경된 Domain 객체를 반환하는 것을 허용한다(5번).
-- **6번(애그리거트 경계 참조는 ID로만)**: Toby는 애그리거트 간 객체 직접 참조(읽기 전용)를 허용한다(`domain.md` 6번).
+- **1번·10번(Read 흐름 Read DTO 매핑 / Query에서 Domain 반환 금지)**: Pragmatic은 조회 흐름에서 Domain 객체를 그대로 반환할 수 있다(4번).
+- **2번(Command 반환 = 생성 ID / 수정·삭제 Unit)**: Pragmatic은 서비스가 변경된 Domain 객체를 반환하는 것을 허용한다(5번).
+- **6번(애그리거트 경계 참조는 ID로만)**: Pragmatic은 애그리거트 간 객체 직접 참조(읽기 전용)를 허용한다(`domain.md` 6번).
 
 그 외 원칙(계층 의존 방향, Command/Query 입력 객체, Finder/Service 분리, 다중 진입점 방어, Rich Domain)은 그대로 적용한다.
 
@@ -51,11 +51,11 @@ Controller, Application Service, Domain, Persistence 간의 의존 방향과 데
 
 - 영속성 드리븐 포트는 Spring Data `Repository<Domain, Long>`를 직접 상속해 정의하고 필요한 메서드만 선언한다. 별도 `{Domain}PersistenceAdapter`·`{Domain}JpaEntity`·매퍼를 두지 않는다 — Spring Data가 런타임에 구현을 제공한다.
 - 리포지토리는 Domain 객체를 그대로 저장/반환한다. 부재는 `Optional` 대신 nullable 반환(`findByIdOrNull`)으로 표현한다.
-- 외부 연동 포트(`EmailSender`)·도메인 SPI(`PasswordEncoder`)는 인터페이스만 두고 구현을 adapter가 담당한다. 도구 선택은 `repository.md`(Toby)를 따른다.
+- 외부 연동 포트(`EmailSender`)·도메인 SPI(`PasswordEncoder`)는 인터페이스만 두고 구현을 adapter가 담당한다. 도구 선택은 `repository.md`(Pragmatic)를 따른다.
 
 ## 5. Application Service (구현체)
 
-- `service-layer.md`(Toby)의 분리·트랜잭션·stereotype 규칙을 따른다. 구현체는 슬라이스 루트에 `{Aggregate}{책임}Service`로 둔다. 하나의 서비스가 여러 역할 포트를 구현할 수 있다.
+- `service-layer.md`(Pragmatic)의 분리·트랜잭션·stereotype 규칙을 따른다. 구현체는 슬라이스 루트에 `{Aggregate}{책임}Service`로 둔다. 하나의 서비스가 여러 역할 포트를 구현할 수 있다.
 - 서비스는 Domain 조회 → Domain 메서드로 상태 변경 → 저장 위임 순으로 흐른다. Domain 객체 반환을 허용한다(0번).
 
 ## 6. Adapter 구현 규칙

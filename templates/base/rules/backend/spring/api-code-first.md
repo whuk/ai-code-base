@@ -1,8 +1,8 @@
-# 코드-first 웹 계층 규칙 (Toby flavor)
+# 코드-first 웹 계층 규칙 (Pragmatic flavor)
 
-웹 계층의 Controller와 Request/Response DTO를 **코드로 직접 작성**하는 규칙이다. 이 파일은 Toby(splearn식) flavor에 적용된다. `shared/rest-api.md`의 REST 설계 규약(URI, 상태 코드, 페이지네이션, 에러 형식)은 그대로 전제한다.
+웹 계층의 Controller와 Request/Response DTO를 **코드로 직접 작성**하는 규칙이다. 이 파일은 Pragmatic(실용) flavor에 적용된다. `shared/rest-api.md`의 REST 설계 규약(URI, 상태 코드, 페이지네이션, 에러 형식)은 그대로 전제한다.
 
-이 프로젝트가 Clean(엄격) flavor(spec-first)를 채택했다면 이 파일은 적용 대상이 아니다. spec-first는 `openapi.yaml`을 먼저 정의하고 Controller 인터페이스·DTO를 자동 생성하는 방식(`api-dto.md`)이며, `/rw:init`이 선택한 flavor에 맞는 한 파일만 남긴다(Toby 선택 시 `api-dto.md`를 제거하고 이 파일을 유지한다).
+이 프로젝트가 Clean(엄격) flavor(spec-first)를 채택했다면 이 파일은 적용 대상이 아니다. spec-first는 `openapi.yaml`을 먼저 정의하고 Controller 인터페이스·DTO를 자동 생성하는 방식(`api-dto.md`)이며, `/rw:init`이 선택한 flavor에 맞는 한 파일만 남긴다(Pragmatic 선택 시 `api-dto.md`를 제거하고 이 파일을 유지한다).
 
 이 프로젝트가 NestJS/FastAPI를 채택했다면 적용 대상이 아니다.
 
@@ -15,7 +15,7 @@
 
 - `@RestController`(또는 stereotype `@WebApiAdapter`)로 작성하고 `provided` 포트 인터페이스를 생성자 주입받는다(Java는 `@RequiredArgsConstructor`, Kotlin은 주 생성자). `ports-and-adapters.md` 참조.
 - 매핑 애노테이션(`@PostMapping` 등)과 `@RequestBody @Valid`를 직접 선언한다.
-- 201 Created가 필요한 생성 API는 서비스가 반환한 식별자로 Controller가 `Location` 헤더를 조립한다(`shared/rest-api.md` 3번). Toby flavor에서 서비스가 Domain 객체를 반환하면 Controller가 그 식별자를 사용한다.
+- 201 Created가 필요한 생성 API는 서비스가 반환한 식별자로 Controller가 `Location` 헤더를 조립한다(`shared/rest-api.md` 3번). Pragmatic flavor에서 서비스가 Domain 객체를 반환하면 Controller가 그 식별자를 사용한다.
 
 ## 3. DTO
 

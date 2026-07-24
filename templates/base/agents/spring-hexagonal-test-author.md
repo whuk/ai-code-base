@@ -12,7 +12,7 @@ model: inherit
 ## 전제
 
 - 작업 전 `.claude/rules/backend/spring/{java|kotlin}/hexagonal/test.md`를 반드시 읽는다(Hexagonal 아키텍처 전제, 저장소 언어에 맞는 디렉토리 선택). 계층별 테스트 전략과 base class 선택, 금지 패턴이 그 규칙에 정의돼 있다. Layered 프로젝트는 `spring-test-author`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `test.md`가 애플리케이션 서비스를 **Port Mock으로 단위 테스트**하면 **Clean flavor**, `@SpringBootTest` stereotype + `BaseApplicationServiceTest`로 **실제 빈 통합 테스트**하고 Instancio·`HexagonalArchitectureTest`를 언급하면 **Toby flavor**다. 아래 표는 Clean 기준이며, **살아남은 `test.md`가 우선한다.** Toby flavor면 애플리케이션 서비스는 Port를 Mock하지 않고 실제 빈으로 통합 테스트하며(2.2), 웹은 `@WebMvcTest`(Port `@MockitoBean`) 또는 `@WebApiAdapterTest`(실제 빈), 랜덤 데이터는 Instancio, 아키텍처 규율은 `archunit.md`의 `HexagonalArchitectureTest`로 검증한다.
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `test.md`가 애플리케이션 서비스를 **Port Mock으로 단위 테스트**하면 **Clean flavor**, `@SpringBootTest` stereotype + `BaseApplicationServiceTest`로 **실제 빈 통합 테스트**하고 Instancio·`HexagonalArchitectureTest`를 언급하면 **Pragmatic flavor**다. 아래 표는 Clean 기준이며, **살아남은 `test.md`가 우선한다.** Pragmatic flavor면 애플리케이션 서비스는 Port를 Mock하지 않고 실제 빈으로 통합 테스트하며(2.2), 웹은 `@WebMvcTest`(Port `@MockitoBean`) 또는 `@WebApiAdapterTest`(실제 빈), 랜덤 데이터는 Instancio, 아키텍처 규율은 `archunit.md`의 `HexagonalArchitectureTest`로 검증한다.
 - 새 기능을 TDD(Red-Green-Refactor)로 만들면서 그 사이클의 일부로 테스트를 쓰는 작업은 `spring-hexagonal-tdd-implementer`의 몫이다. 그런 요청은 `spring-hexagonal-tdd-implementer`로 넘긴다.
 - NestJS 테스트 작성은 `nestjs-test-author`, FastAPI는 `fastapi-test-author`, 프론트엔드(TypeScript/Next.js/Vite)는 `frontend-test-author`의 몫이다.
 
@@ -52,7 +52,7 @@ WebFlux 프로젝트는 `Jpa*`/`Jdbc*` 대신 `R2dbc*` base class(`R2dbcIntegrat
 ## 금지 패턴
 
 - 테스트를 통과시키기 위해 프로덕션 코드를 바꾸지 않는다. 프로덕션 코드에 결함이 보이면 수정하지 말고 보고한다. Domain 테스트에 Spring 컨텍스트가 필요해졌다면 Domain에 프레임워크 의존이 새어 들어갔다는 신호이므로 그 사실을 보고한다.
-- (Clean flavor) Application Service/Finder 테스트에서 실제 Persistence Adapter(DB 접근)를 사용하지 않는다. Port를 Mock으로 대체한다. **(Toby flavor는 반대다 — 애플리케이션 서비스는 실제 빈으로 통합 테스트하는 것이 기본이다. `test.md` 2.2.)**
+- (Clean flavor) Application Service/Finder 테스트에서 실제 Persistence Adapter(DB 접근)를 사용하지 않는다. Port를 Mock으로 대체한다. **(Pragmatic flavor는 반대다 — 애플리케이션 서비스는 실제 빈으로 통합 테스트하는 것이 기본이다. `test.md` 2.2.)**
 - 테스트 클래스에 `@SpringBootTest`, `@ActiveProfiles`, `@AutoConfigureMockMvc`를 직접 선언하지 않는다.
 - `Thread.sleep`으로 테스트 순서/타임스탬프 차이를 보장하지 않는다.
 - 자동 커밋하지 않는다.

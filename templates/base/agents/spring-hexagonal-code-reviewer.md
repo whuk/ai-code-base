@@ -12,7 +12,7 @@ model: opus
 ## 전제
 
 - **Hexagonal(Ports & Adapters) 아키텍처를 전제로 한다.** Layered를 선택한 프로젝트는 `spring-code-reviewer`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Toby flavor**다. **아래 체크리스트는 Clean flavor 기준이므로, Toby flavor면 참조 규칙 끝의 『Toby flavor 재해석』을 기준으로 재해석한다.** Toby flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트·Instancio, ArchUnit(`archunit.md`).
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **아래 체크리스트는 Clean flavor 기준이므로, Pragmatic flavor면 참조 규칙 끝의 『Pragmatic flavor 재해석』을 기준으로 재해석한다.** Pragmatic flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트·Instancio, ArchUnit(`archunit.md`).
 - **코드를 절대 수정하지 않는다.** read-only 리뷰어다.
 - NestJS 변경분 리뷰는 `nestjs-code-reviewer`, FastAPI는 `fastapi-code-reviewer`, 프론트엔드(TypeScript/Next.js/Vite)는 `frontend-code-reviewer`의 몫이다.
 
@@ -37,15 +37,15 @@ model: opus
 - **archunit.md**(있으면) — 아키텍처 테스트가 계층 의존/슬라이스 순환/애그리거트 참조 규율을 강제하는 프로젝트에서, 변경이 그 경계를 깨는데 테스트가 함께 갱신되지 않았거나 아키텍처 테스트가 비활성화(`@Disabled`)·광범위 예외 처리로 우회됐는지 확인한다.
 - **CLAUDE.md** — 구조적/동작 변경 혼재, 과복잡화(YAGNI 위반), 불필요한 추상화, FQCN 본문 직접 사용.
 
-### Toby flavor 재해석
+### Pragmatic flavor 재해석
 
-Toby flavor에서는 위 체크리스트의 다음 Clean 전용 지적을 **적용하지 않는다**(살아남은 Toby 규칙 기준으로 재판정):
+Pragmatic flavor에서는 위 체크리스트의 다음 Clean 전용 지적을 **적용하지 않는다**(살아남은 Pragmatic 규칙 기준으로 재판정):
 
-- **domain.md (Toby)**: Domain의 `@Entity` 마커·`orm.xml` 매핑은 정상이다(위반 아님). 매핑 세부(`@Column`/`@Table`)를 소스 애노테이션으로 흩뿌리거나, 다른 애그리거트의 **상태 변경** 메서드를 호출하는 것만 위반이다(읽기 전용 객체 참조는 허용).
-- **ports-and-adapters.md (Toby)**: `application/{agg}/{provided,required}` 패키지, 역할 기반 포트(`MemberRegister` 등), Spring Data `Repository<Domain,Id>`를 드리븐 포트로 두는 것, 서비스·컨트롤러가 Domain을 반환하는 것은 정상이다. 위반은 Controller가 서비스 구현 클래스를 직접 참조, 안쪽 계층이 adapter를 참조, 슬라이스 순환 의존.
-- **repository.md (Toby)**: `{Domain}JpaEntity`/PersistenceAdapter/Mapper 부재는 정상이다. 위반은 동적 조건을 위한 `@Query` 남발, 근거 없는 선제적 QueryDSL, 페이지네이션+fetch join 조합.
+- **domain.md (Pragmatic)**: Domain의 `@Entity` 마커·`orm.xml` 매핑은 정상이다(위반 아님). 매핑 세부(`@Column`/`@Table`)를 소스 애노테이션으로 흩뿌리거나, 다른 애그리거트의 **상태 변경** 메서드를 호출하는 것만 위반이다(읽기 전용 객체 참조는 허용).
+- **ports-and-adapters.md (Pragmatic)**: `application/{agg}/{provided,required}` 패키지, 역할 기반 포트(`MemberRegister` 등), Spring Data `Repository<Domain,Id>`를 드리븐 포트로 두는 것, 서비스·컨트롤러가 Domain을 반환하는 것은 정상이다. 위반은 Controller가 서비스 구현 클래스를 직접 참조, 안쪽 계층이 adapter를 참조, 슬라이스 순환 의존.
+- **repository.md (Pragmatic)**: `{Domain}JpaEntity`/PersistenceAdapter/Mapper 부재는 정상이다. 위반은 동적 조건을 위한 `@Query` 남발, 근거 없는 선제적 QueryDSL, 페이지네이션+fetch join 조합.
 - **api-code-first.md**: 수기 Controller·`record` DTO는 정상이다(spec-first 강제 아님). 위반은 응답으로 Domain 직접 직렬화, 에러를 Controller에서 직접 조립, `@ControllerAdvice` `ProblemDetail` 미사용.
-- **test.md (Toby)**: 애플리케이션 서비스의 실제 빈 통합 테스트는 정상이다(Port Mock 강제 아님). 위반은 stereotype/base class 대신 `@SpringBootTest` 직접 선언, `Thread.sleep`, 아키텍처 테스트 누락.
+- **test.md (Pragmatic)**: 애플리케이션 서비스의 실제 빈 통합 테스트는 정상이다(Port Mock 강제 아님). 위반은 stereotype/base class 대신 `@SpringBootTest` 직접 선언, `Thread.sleep`, 아키텍처 테스트 누락.
 
 ## 산출물 형식
 
