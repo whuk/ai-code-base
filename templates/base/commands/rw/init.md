@@ -175,7 +175,7 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 - `.claude/agents/frontend-*.md` (frontend-vue-* 포함 13개 전부)
 
 ### 프론트엔드 포함 + Next.js 선택 시 — 삭제
-- `.claude/rules/frontend/vite.md`, `.claude/rules/frontend/vue.md`
+- `.claude/rules/frontend/vite.md`, `.claude/rules/frontend/vue.md`, `.claude/rules/frontend/vite-routing-reactrouter.md`, `.claude/rules/frontend/vite-routing-tanstack.md` (`vite-routing-*`는 Vite 전용 라우팅 규칙이므로 Vite 미선택 시 둘 다 삭제한다. `vite.md`만 삭제하면 이 두 파일이 죽은 규칙으로 남는다)
 - Vue.js 전담 에이전트 6개: `.claude/agents/frontend-vue-*.md`
 
 ### 프론트엔드 포함 + Vite 선택 시 — 삭제
@@ -183,7 +183,7 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 - Vue.js 전담 에이전트 6개: `.claude/agents/frontend-vue-*.md`
 
 ### 프론트엔드 포함 + Vue.js 선택 시 — 삭제
-- `.claude/rules/frontend/nextjs.md`, `.claude/rules/frontend/vite.md`
+- `.claude/rules/frontend/nextjs.md`, `.claude/rules/frontend/vite.md`, `.claude/rules/frontend/vite-routing-reactrouter.md`, `.claude/rules/frontend/vite-routing-tanstack.md` (`vite-routing-*`는 Vite 전용 라우팅 규칙이므로 Vite 미선택 시 둘 다 삭제한다. `vite.md`만 삭제하면 이 두 파일이 죽은 규칙으로 남는다)
 - React 계열 전제 에이전트 6개: `.claude/agents/frontend-architect.md`, `frontend-tdd-implementer.md`, `frontend-refactorer.md`, `frontend-test-author.md`, `frontend-code-reviewer.md`, `frontend-debugger.md` (`frontend-vue-*` 6개와, 프레임워크 무관인 `frontend-style-checker`는 유지)
 
 ### 백엔드 스택 "Spring Boot" + "JPA만" 선택 시 — 삭제

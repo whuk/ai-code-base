@@ -30,6 +30,16 @@ Gemini/Codex는 글롭 기반 조건부 규칙 로딩을 네이티브로 지원�
 - Codex 커스텀 프롬프트는 홈 디렉토리(`~/.codex/prompts/`)에서만 로드됩니다. 생성된 `.codex/prompts/`를 그리로 복사/심링크하세요.
 - Codex `AGENTS.md`는 import를 지원하지 않아 규칙은 참조 목차로만 링크되며, 에이전트가 필요 시 직접 읽습니다.
 
+### 설계 근거 (포맷 리서치, 2026-07 기준)
+
+각 도구 공식 문서 기준. 도구 포맷은 바뀔 수 있으므로 emit 계층 수정 시 최신 문서로 재확인하세요.
+
+- **글롭 조건부 로딩은 Claude 전용** — Gemini/Codex 모두 미지원이라 규칙을 참조형으로 배치. Gemini `GEMINI.md`는 `@import`가 있으나 무조건 로딩이라 토큰 절약 위해 참조 목차 방식을 택함.
+- **Gemini 커맨드 네임스페이싱이 그대로 매핑** — `.gemini/commands/rw/init.toml` → `/rw:init` (경로 구분자 → 콜론). 인자 `$ARGUMENTS`는 `{{args}}`로 변환.
+- **서브에이전트는 세 도구 모두 지원** — Gemini는 md+YAML(`name`/`description` 필수, Claude와 거의 동일), Codex는 TOML(`name`/`description`/`developer_instructions`, 본문이 `developer_instructions` 문자열로).
+- **Codex 프롬프트는 홈 전용·deprecated** — 프로젝트 스코프가 없어 `.codex/prompts/`로 내보낸 뒤 사용자가 홈으로 옮기는 전제(장기적으로 skills 대안 검토).
+- **모델 ID는 비워 둠** — 각 도구의 모델명은 변동성이 커서 하드코딩하지 않고 사용자가 채우도록 함.
+
 ## 개발
 
 ```bash
@@ -48,8 +58,9 @@ src/
   prune.ts          # 선별 엔진 (rw:init 3단계 keep/delete/rename, 순수 함수)
   emit/             # claude/gemini/codex 포맷 출력기
   report.ts         # 결과 보고
-docs/format-research.md  # 3개 타깃 포맷 리서치 근거
 ```
+
+> 3개 타깃 포맷의 상세 리서치 근거는 "설계 근거" 섹션에 요약돼 있습니다.
 
 ## 원본 명세 대비 개선
 
