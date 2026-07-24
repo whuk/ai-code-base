@@ -1,6 +1,6 @@
-# Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Toby flavor)
+# Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Pragmatic flavor)
 
-`application/{aggregate}` 슬라이스 루트의 서비스 구현 클래스 작성 규칙이다. 이 파일은 Toby(splearn식) flavor 버전으로, 역할 기반 `provided` 포트를 구현하는 `{Aggregate}{책임}Service`와 커스텀 stereotype 관용구를 다룬다.
+`application/{aggregate}` 슬라이스 루트의 서비스 구현 클래스 작성 규칙이다. 이 파일은 Pragmatic(실용) flavor 버전으로, 역할 기반 `provided` 포트를 구현하는 `{Aggregate}{책임}Service`와 커스텀 stereotype 관용구를 다룬다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 `{Domain}Service`/`{Domain}Finder`가 `{Domain}CommandUseCase`/`{Domain}QueryUseCase`를 구현하는 버전(`service-layer.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`service-layer.md`)으로 남긴다.
 
@@ -20,7 +20,7 @@
   - `@ApplicationService` = `@Service` + `@Transactional` (클래스 단위 트랜잭션).
   - `@ValidatedApplicationService` = `@ApplicationService` + `@Validated` (포트 파라미터 `@Valid` 검증을 트리거).
   - `@WebApiAdapter` = `@Adapter`(마커) + `@RestController`.
-- 트랜잭션은 **클래스 단위**로 선언한다(메서드마다 개별 선언 금지). 조회 전용 서비스에는 `@Transactional(readOnly = true)`를 두는 것을 권장한다(splearn은 stereotype에 쓰기 트랜잭션을 묶어두므로, 조회 서비스는 `@ApplicationService`만 쓰거나 readOnly를 별도 명시 — 팀 컨벤션으로 하나를 고정한다).
+- 트랜잭션은 **클래스 단위**로 선언한다(메서드마다 개별 선언 금지). 조회 전용 서비스에는 `@Transactional(readOnly = true)`를 두는 것을 권장한다(이 flavor는 stereotype에 쓰기 트랜잭션을 묶으므로, 조회 서비스는 `@ApplicationService`만 쓰거나 readOnly를 별도 명시 — 팀 컨벤션으로 하나를 고정한다).
 - 트랜잭션 경계는 Application Service에만 둔다. Domain·리포지토리에 트랜잭션 애노테이션을 두지 않는다.
 - 의존성은 `private final` 필드 + 생성자 주입(`@RequiredArgsConstructor`)으로 받는다.
 

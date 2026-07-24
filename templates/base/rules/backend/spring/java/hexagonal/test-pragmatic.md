@@ -1,6 +1,6 @@
-# 테스트 작성 규칙 (Hexagonal — Toby flavor)
+# 테스트 작성 규칙 (Hexagonal — Pragmatic flavor)
 
-계층별 검증 대상과 필요한 인프라를 정의한다. 이 파일은 Toby(splearn식) flavor 버전으로, 애플리케이션 서비스를 **실제 빈 통합 방식**으로 검증하고, stereotype 기반 테스트 애노테이션·픽스처·Instancio·ArchUnit을 사용한다.
+계층별 검증 대상과 필요한 인프라를 정의한다. 이 파일은 Pragmatic(실용) flavor 버전으로, 애플리케이션 서비스를 **실제 빈 통합 방식**으로 검증하고, stereotype 기반 테스트 애노테이션·픽스처·Instancio·ArchUnit을 사용한다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 애플리케이션 서비스를 Port Mock으로 단위 테스트하는 버전(`test.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`test.md`)으로 남긴다.
 

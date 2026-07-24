@@ -1,6 +1,6 @@
-# DDD Rich Domain 클래스 작성 규칙 (Hexagonal — Toby flavor: 도메인=엔티티)
+# DDD Rich Domain 클래스 작성 규칙 (Hexagonal — Pragmatic flavor: 도메인=엔티티)
 
-도메인 패키지 내 클래스를 작성하거나 수정할 때 다음 원칙을 따른다. 이 파일은 Hexagonal 패키징을 쓰되 **Domain 클래스가 JPA 엔티티를 겸하는**(`@Entity` 마커 + `orm.xml`) Toby(splearn식) flavor의 Kotlin 버전이다. 별도의 `{Domain}JpaEntity`를 두지 않고, Domain이 곧 영속성 대상이다.
+도메인 패키지 내 클래스를 작성하거나 수정할 때 다음 원칙을 따른다. 이 파일은 Hexagonal 패키징을 쓰되 **Domain 클래스가 JPA 엔티티를 겸하는**(`@Entity` 마커 + `orm.xml`) Pragmatic(실용) flavor의 Kotlin 버전이다. 별도의 `{Domain}JpaEntity`를 두지 않고, Domain이 곧 영속성 대상이다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 Domain을 순수 POKO로 두고 `{Domain}JpaEntity`를 완전히 분리하는 버전(`domain.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`domain.md`)으로 남긴다.
 
@@ -34,7 +34,7 @@
 ## 5. 자기 검증 (Self-validating)
 
 - 객체 생성 시점에 불변 조건을 검증한다(`init` 블록 또는 팩터리 함수). 유효하지 않은 상태의 객체는 존재할 수 없어야 한다.
-- 상태 변경 메서드 진입 시 사전 조건을 `check(...)`/`require(...)`로 검증한다(splearn Java의 `Assert.state`/`Assert.isTrue`에 대응). null 방지는 Kotlin 타입 시스템(비-null 타입)으로 표현하고 경계 값만 명시 검증한다.
+- 상태 변경 메서드 진입 시 사전 조건을 `check(...)`/`require(...)`로 검증한다(Java 버전의 `Assert.state`/`Assert.isTrue`에 대응). null 방지는 Kotlin 타입 시스템(비-null 타입)으로 표현하고 경계 값만 명시 검증한다.
 - 검증 실패 시 명확한 도메인 예외(`<상황>Exception`)를 던진다.
 - JPA 하이드레이션 경로(no-arg 생성자 + 필드 주입)는 이미 검증된 상태의 재구성이므로 불변 조건 재검증 대상에서 제외한다.
 

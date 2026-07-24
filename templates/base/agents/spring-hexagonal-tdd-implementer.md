@@ -12,14 +12,14 @@ model: inherit
 ## 전제
 
 - **Hexagonal(Ports & Adapters) 아키텍처를 전제로 한다.** Layered를 선택한 프로젝트는 `spring-tdd-implementer`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Toby flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Toby flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈)·Instancio, ArchUnit(`archunit.md`).
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Pragmatic flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈)·Instancio, ArchUnit(`archunit.md`).
 - 이 저장소의 실제 언어(Java 또는 Kotlin), 빌드 도구(Gradle 또는 Maven), 웹 스택(MVC 또는 WebFlux — `spring-boot-starter-webflux` 의존성과 `webflux.md` 존재 여부로 판단), 영속성 도구(JPA 또는 SQL-first — `repository-sql.md` 존재 여부와 의존성으로 판단. WebFlux면 R2DBC로 고정)를 작업 시작 시 파악한다. 데이터 홀더는 Java `record` / Kotlin `data class`를 사용하고, 규칙 참조는 해당 언어 디렉토리(`spring/java/` 또는 `spring/kotlin/`)를 따른다.
 - NestJS는 `nestjs-tdd-implementer`, FastAPI는 `fastapi-tdd-implementer`, 프론트엔드(TypeScript/Next.js/Vite)는 `frontend-tdd-implementer`를 사용한다.
 
 ## 작업 절차
 
 1. **가정을 먼저 진술한다.** 요구가 모호하면 구현 전에 질문한다. 해석이 여럿이면 모두 제시한다.
-2. **API가 관여하면 flavor에 맞는 방식으로.** Clean flavor(spec-first)는 openapi.yaml을 먼저 정의하고 빌드로 Controller 인터페이스·DTO 모델을 생성하며 소스에 Swagger 어노테이션을 직접 붙이지 않는다(`api-dto.md`). Toby flavor(code-first)는 수기 `@RestController`(또는 `@WebApiAdapter`)와 `record` 요청·응답 DTO를 직접 작성하고 `@ControllerAdvice`의 `ProblemDetail`로 에러를 통일한다(`api-code-first.md`).
+2. **API가 관여하면 flavor에 맞는 방식으로.** Clean flavor(spec-first)는 openapi.yaml을 먼저 정의하고 빌드로 Controller 인터페이스·DTO 모델을 생성하며 소스에 Swagger 어노테이션을 직접 붙이지 않는다(`api-dto.md`). Pragmatic flavor(code-first)는 수기 `@RestController`(또는 `@WebApiAdapter`)와 `record` 요청·응답 DTO를 직접 작성하고 `@ControllerAdvice`의 `ProblemDetail`로 에러를 통일한다(`api-code-first.md`).
 3. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Domain은 순수 JUnit, Application Service/Finder는 Port를 Mock, Adapter는 `test.md` 기준 base class를 선택한다.
 4. **Green**: 통과시키기에 충분한 **최소** 코드만 작성한다.
 5. **Refactor**: Green 상태에서만 리팩터링한다. 한 번에 하나씩, 각 단계 후 테스트 실행.
@@ -36,7 +36,7 @@ model: inherit
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/ports-and-adapters.md` — 패키지 구조, 의존 방향, UseCase/Port/Adapter 규칙
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/service-layer.md` — Finder/Service 분리, 트랜잭션
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/repository.md` — Persistence Adapter, Specification/QueryDSL/JdbcClient 도구 선택 (SQL-first 프로젝트는 대신 `.claude/rules/backend/spring/{java|kotlin}/repository-sql.md`를, WebFlux 프로젝트는 `.claude/rules/backend/spring/java/repository-r2dbc.md`와 `.claude/rules/backend/spring/java/webflux.md`를 읽는다)
-- 웹 계층: **Clean flavor**는 `.claude/rules/backend/spring/api-dto.md`(spec-first, DTO 자동생성), **Toby flavor**는 `.claude/rules/backend/spring/api-code-first.md`(코드-first, 수기 DTO). 공통으로 `.claude/rules/backend/shared/rest-api.md`. 살아남은 파일을 읽는다
+- 웹 계층: **Clean flavor**는 `.claude/rules/backend/spring/api-dto.md`(spec-first, DTO 자동생성), **Pragmatic flavor**는 `.claude/rules/backend/spring/api-code-first.md`(코드-first, 수기 DTO). 공통으로 `.claude/rules/backend/shared/rest-api.md`. 살아남은 파일을 읽는다
 - `.claude/rules/backend/spring/{java|kotlin}/archunit.md`(있으면) — ArchUnit 아키텍처 테스트. 계층/슬라이스 경계를 강제하는 프로젝트면 새 코드가 규칙을 깨지 않는지 확인하고, 새 계층/슬라이스를 추가하면 아키텍처 테스트도 함께 갱신한다
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/test.md` — 계층별 테스트 전략과 base class 선택
 
@@ -51,7 +51,7 @@ model: inherit
 - (JPA) Repository 동적 검색은 `{Domain}JpaEntity` 기준 Specification 우선. QueryDSL/JdbcClient는 `hexagonal/repository.md`의 escalation ladder 근거가 있을 때만. (SQL-first) JdbcClient가 기본 실행기이며 동적 조건은 jOOQ Condition 조합으로 해결한다 (`repository-sql.md`). (WebFlux) Spring Data R2DBC → `R2dbcEntityTemplate` Criteria → jOOQ 빌더 + `DatabaseClient` 순으로 에스컬레이션한다 (`repository-r2dbc.md` 3번).
 - (WebFlux) UseCase/Port/Adapter 반환 타입은 `Mono`/`Flux`, 트랜잭션은 클래스 단위 선언 그대로. 리액티브 체인에 블로킹 호출(`block()`, JDBC, `Thread.sleep`)을 넣지 않고, 테스트는 `WebTestClient`/`StepVerifier`를 사용한다 (`webflux.md` 3번·4번·8번).
 - 연관된 파라미터가 4개 이상이면 Value Object로 그룹화한다. Command/Query에도 Web DTO와 동일한 Bean Validation 애노테이션을 붙여 다중 진입점을 방어한다 (`shared/architecture.md` 4·5번).
-- **(Toby flavor면 위 Clean 요약 대신 살아남은 규칙을 따른다.)** Domain=JPA 엔티티(`@Entity`+orm.xml, `domain.md`), `provided`/`required` 역할 포트와 Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음, `repository.md`), 서비스·컨트롤러의 Domain 반환·애그리거트 객체 참조(읽기 전용) 허용, 웹은 code-first(`api-code-first.md`), 애플리케이션 서비스는 실제 빈 통합 테스트(`test.md` 2.2). 검증은 `provided` 포트 파라미터 `@Valid` + `@ValidatedApplicationService`로 한다.
+- **(Pragmatic flavor면 위 Clean 요약 대신 살아남은 규칙을 따른다.)** Domain=JPA 엔티티(`@Entity`+orm.xml, `domain.md`), `provided`/`required` 역할 포트와 Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음, `repository.md`), 서비스·컨트롤러의 Domain 반환·애그리거트 객체 참조(읽기 전용) 허용, 웹은 code-first(`api-code-first.md`), 애플리케이션 서비스는 실제 빈 통합 테스트(`test.md` 2.2). 검증은 `provided` 포트 파라미터 `@Valid` + `@ValidatedApplicationService`로 한다.
 
 ## 산출물 형식
 

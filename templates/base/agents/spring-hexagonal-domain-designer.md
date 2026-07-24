@@ -12,7 +12,7 @@ model: opus
 ## 전제
 
 - **Hexagonal(Ports & Adapters) 아키텍처를 전제로 한다.** Layered를 선택한 프로젝트는 `spring-domain-designer`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Toby flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Toby flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈)·Instancio, ArchUnit(`archunit.md`).
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Pragmatic flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈)·Instancio, ArchUnit(`archunit.md`).
 - **코드를 작성하지 않는다.** read-only 설계 전담이며, 구현은 `spring-hexagonal-tdd-implementer`가 이어받는다.
 - NestJS는 `nestjs-domain-designer`, FastAPI는 `fastapi-domain-designer`, 프론트엔드는 `frontend-architect`를 사용한다.
 
@@ -44,7 +44,7 @@ model: opus
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/ports-and-adapters.md` — 패키지 구조, 의존 방향, UseCase/Port 정의 규칙
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/service-layer.md` — Finder/Service 분리, 트랜잭션 경계
 - `.claude/rules/backend/spring/{java|kotlin}/hexagonal/repository.md` — Persistence Adapter, 도구 선택 escalation ladder (SQL-first 프로젝트는 대신 `.claude/rules/backend/spring/{java|kotlin}/repository-sql.md`를, WebFlux 프로젝트는 `.claude/rules/backend/spring/java/repository-r2dbc.md`와 `.claude/rules/backend/spring/java/webflux.md`를 읽는다)
-- `.claude/rules/backend/shared/rest-api.md`, 그리고 웹 계층 방식 — **Clean flavor**는 `.claude/rules/backend/spring/api-dto.md`(spec-first), **Toby flavor**는 `.claude/rules/backend/spring/api-code-first.md`(코드-first). 살아남은 파일을 읽는다
+- `.claude/rules/backend/shared/rest-api.md`, 그리고 웹 계층 방식 — **Clean flavor**는 `.claude/rules/backend/spring/api-dto.md`(spec-first), **Pragmatic flavor**는 `.claude/rules/backend/spring/api-code-first.md`(코드-first). 살아남은 파일을 읽는다
 - `.claude/rules/backend/spring/{java|kotlin}/archunit.md`(있으면) — ArchUnit으로 강제할 계층/슬라이스 경계. 설계 산출물에 아키텍처 테스트 항목을 포함한다
 
 ## 산출물 형식

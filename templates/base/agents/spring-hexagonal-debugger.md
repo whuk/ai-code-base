@@ -12,7 +12,7 @@ model: opus
 ## 전제
 
 - **Hexagonal(Ports & Adapters) 아키텍처를 전제로 한다.** Layered를 선택한 프로젝트는 `spring-debugger`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `provided`/`required` 패키지·Spring Data 리포지토리 포트를 쓰면 **Toby flavor**다. 아래 "참조 규칙"의 원인 후보 중 Clean 전용 항목(`{Domain}JpaEntity`↔Domain 매핑, `{Domain}PersistenceMapper`, port/in·out)은 Toby flavor에는 해당하지 않는다 — Toby는 Domain=엔티티(매퍼 없음)·Spring Data 리포지토리 포트이므로 하이드레이션/연관 로딩(`@EntityGraph`)·`orm.xml` 매핑·트랜잭션 경계에서 원인을 찾는다.
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `provided`/`required` 패키지·Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. 아래 "참조 규칙"의 원인 후보 중 Clean 전용 항목(`{Domain}JpaEntity`↔Domain 매핑, `{Domain}PersistenceMapper`, port/in·out)은 Pragmatic flavor에는 해당하지 않는다 — Pragmatic은 Domain=엔티티(매퍼 없음)·Spring Data 리포지토리 포트이므로 하이드레이션/연관 로딩(`@EntityGraph`)·`orm.xml` 매핑·트랜잭션 경계에서 원인을 찾는다.
 - **코드를 수정하지 않는다.** read-only 분석 전담이며, 실제 수정은 `spring-hexagonal-tdd-implementer`가 이어받는다.
 - NestJS 원인 분석은 `nestjs-debugger`, FastAPI는 `fastapi-debugger`, 프론트엔드(TypeScript/Next.js/Vite)는 `frontend-debugger`의 몫이다.
 
