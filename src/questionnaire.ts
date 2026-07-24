@@ -1,6 +1,7 @@
 // Phase 2 — interactive questionnaire. Mirrors /rw:init step 2 branching and
 // appends the two extra questions (target agent, output directory).
 
+import path from "node:path";
 import { select, text, isCancel, cancel } from "@clack/prompts";
 import type {
   Answers,
@@ -92,14 +93,15 @@ export async function runQuestionnaire(): Promise<Answers> {
     }),
   );
 
+  const defaultOutputDir = path.join(process.cwd(), "output");
   const outputDir = await ask<string>(
     text({
-      message: "출력 디렉토리 (비우면 현재 디렉토리)",
-      placeholder: process.cwd(),
-      defaultValue: process.cwd(),
+      message: "출력 디렉토리 (비우면 ./output)",
+      placeholder: defaultOutputDir,
+      defaultValue: defaultOutputDir,
     }),
   );
-  answers.outputDir = outputDir.trim() || process.cwd();
+  answers.outputDir = outputDir.trim() || defaultOutputDir;
 
   return answers as Answers;
 }
