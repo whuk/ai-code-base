@@ -1,0 +1,23 @@
+# dependencies & build output
+node_modules/
+dist/
+
+# local claude-code-base tooling (not part of the package)
+.claude/
+
+# generated CLI output / demos
+demo/
+out/
+*.tgz
+
+# scratch & temp
+scratch-*
+*.log
+tmp/
+.tmp/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
