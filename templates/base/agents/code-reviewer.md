@@ -33,7 +33,7 @@ model: opus
 ## 참조 규칙
 
 - **`.claude/rules/code-review.md`** — 이 에이전트의 1차 기준. 심각도 등급(1번), 리뷰 범위(2번), 관점별 체크리스트(3~10번), 지적 작성 형식(11번).
-- **`.claude/CLAUDE.md`** — 구조적 변경과 동작 변경의 혼재, 커밋 규율, 일반 행동 규칙(7절: 과복잡화·투기적 구현·범위 밖 변경·불필요한 리팩터링).
+- **`.claude/CLAUDE.md`** — 구조적 변경과 동작 변경의 혼재, 커밋 규율, 일반 행동 규칙(6절: 과복잡화·투기적 구현·범위 밖 변경·불필요한 리팩터링).
 - **`.claude/rules/backend/shared/architecture.md`**(백엔드 변경이 있고 파일이 존재하면) — 계층 의존 방향, Command/Query 객체, Finder/Service 분리, 의도된 검증 중복.
 - **`.claude/rules/backend/shared/rest-api.md`**(HTTP 계층 변경이 있고 파일이 존재하면) — URI·상태 코드·에러 응답(RFC 9457)·페이지네이션 규약.
 - **스택 규칙**(존재하는 것만) — Spring은 `.claude/rules/backend/spring/`, NestJS는 `.claude/rules/backend/nestjs/`, FastAPI는 `.claude/rules/backend/fastapi/`, 프론트엔드는 `.claude/rules/frontend/`. 스택 전담 리뷰어가 함께 실행되는 경우 이 규칙들의 상세 판정은 그쪽에 맡기고 중복 지적을 만들지 않는다.
