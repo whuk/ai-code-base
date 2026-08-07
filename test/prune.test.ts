@@ -24,7 +24,7 @@ function outputs(a: Answers): Set<string> {
 describe("manifest sanity", () => {
   it("extracted the full base template", () => {
     expect(manifest.filter((f) => f.startsWith("agents/")).length).toBe(42);
-    expect(manifest.filter((f) => f.startsWith("commands/")).length).toBe(11);
+    expect(manifest.filter((f) => f.startsWith("commands/")).length).toBe(13);
     expect(manifest.filter((f) => f.startsWith("rules/")).length).toBe(65);
     expect(manifest).toContain("context.md");
     expect(manifest).toContain("settings.json");
@@ -51,8 +51,9 @@ describe("common files always survive", () => {
     const o = outputs(a);
     expect(o).toContain("context.md");
     expect(o).toContain("settings.json");
-    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(11);
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(13);
     expect(o).toContain("commands/rw/git/pr-review.md");
+    expect(o).toContain("commands/rw/spec/spec.md");
     expect(o).toContain("commands/rw/plan/plan_clean.md");
   });
 });
@@ -69,13 +70,13 @@ describe("Claude-only commands are dropped for other targets", () => {
   it("keeps plan_clean for claude", () => {
     const o = outputs(answersFor("claude"));
     expect(o).toContain("commands/rw/plan/plan_clean.md");
-    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(11);
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(13);
   });
 
   it.each(["gemini", "codex"] as const)("drops plan_clean for %s", (target) => {
     const o = outputs(answersFor(target));
     expect(o).not.toContain("commands/rw/plan/plan_clean.md");
-    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(10);
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(12);
   });
 
   it("explains the removal in a notice", () => {
