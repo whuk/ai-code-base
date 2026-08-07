@@ -24,7 +24,7 @@ function outputs(a: Answers): Set<string> {
 describe("manifest sanity", () => {
   it("extracted the full base template", () => {
     expect(manifest.filter((f) => f.startsWith("agents/")).length).toBe(42);
-    expect(manifest.filter((f) => f.startsWith("commands/")).length).toBe(10);
+    expect(manifest.filter((f) => f.startsWith("commands/")).length).toBe(11);
     expect(manifest.filter((f) => f.startsWith("rules/")).length).toBe(65);
     expect(manifest).toContain("context.md");
     expect(manifest).toContain("settings.json");
@@ -51,8 +51,9 @@ describe("common files always survive", () => {
     const o = outputs(a);
     expect(o).toContain("context.md");
     expect(o).toContain("settings.json");
-    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(10);
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(11);
     expect(o).toContain("commands/rw/git/pr-review.md");
+    expect(o).toContain("commands/rw/plan/plan_clean.md");
   });
 });
 
