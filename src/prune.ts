@@ -10,6 +10,15 @@ import type { Answers, PruneResult, SpringLanguage, SpringArchitecture } from ".
 const R = "rules/backend";
 const SPRING = `${R}/spring`;
 
+/**
+ * Commands that only work on Claude Code's on-disk layout.
+ * plan_clean walks `~/.claude/plans` and back-traces projects through
+ * `~/.claude/projects/**\/*.jsonl`; neither path exists for other agents.
+ * Gemini keeps plans under `~/.gemini/tmp/<project>/<session>/plans/` and
+ * prunes them after 30 days on its own; Codex has no documented plans path.
+ */
+const CLAUDE_ONLY_COMMANDS = ["commands/rw/plan/plan_clean.md"];
+
 /** Layered-premise Spring agents (removed when Hexagonal is chosen). */
 const SPRING_LAYERED_AGENTS = [
   "agents/spring-domain-designer.md",
@@ -117,7 +126,18 @@ export function prune(answers: Answers, allFiles: string[]): PruneResult {
   if (!hasFrontend) pruneNoFrontend(s);
   else pruneFrontend(s, answers);
 
+  pruneByTarget(s, answers);
+
   return s.build();
+}
+
+/** Drop files that assume a specific agent's runtime layout. */
+function pruneByTarget(s: Selector, a: Answers): void {
+  if (a.target === "claude") return;
+  s.removeFiles(CLAUDE_ONLY_COMMANDS);
+  s.notice(
+    "plan_clean 커맨드는 Claude Code의 `~/.claude/plans` 구조를 전제하므로 제외했습니다. 이 도구의 플랜 파일은 다른 경로에 저장됩니다.",
+  );
 }
 
 function pruneNoBackend(s: Selector): void {

@@ -57,6 +57,34 @@ describe("common files always survive", () => {
   });
 });
 
+describe("Claude-only commands are dropped for other targets", () => {
+  const answersFor = (target: Answers["target"]): Answers => ({
+    area: "backend",
+    backend: "fastapi",
+    fastapi: { orm: true, rdb: "PostgreSQL" },
+    target,
+    outputDir: ".",
+  });
+
+  it("keeps plan_clean for claude", () => {
+    const o = outputs(answersFor("claude"));
+    expect(o).toContain("commands/rw/plan/plan_clean.md");
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(11);
+  });
+
+  it.each(["gemini", "codex"] as const)("drops plan_clean for %s", (target) => {
+    const o = outputs(answersFor(target));
+    expect(o).not.toContain("commands/rw/plan/plan_clean.md");
+    expect([...o].filter((f) => f.startsWith("commands/")).length).toBe(10);
+  });
+
+  it("explains the removal in a notice", () => {
+    const r = prune(answersFor("gemini"), manifest);
+    expect(r.remove).toContain("commands/rw/plan/plan_clean.md");
+    expect(r.notices.join("\n")).toMatch(/plan_clean/);
+  });
+});
+
 describe("stack-agnostic review files survive every stack", () => {
   const cases: Array<[string, Answers]> = [
     [
