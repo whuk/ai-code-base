@@ -1,3 +1,8 @@
+---
+description: Application Service 분리, 역할 포트 구현, stereotype·트랜잭션 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
+globs: "**/provided/**,**/*Service.kt,**/*Finder.kt"
+---
+
 # Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
 
 `application/{aggregate}` 슬라이스 루트의 서비스 구현 클래스 작성 규칙이다. 이 파일은 Pragmatic(실용) flavor의 Kotlin 버전으로, 역할 기반 `provided` 포트를 구현하는 `{Aggregate}{책임}Service`와 커스텀 stereotype 관용구를 다룬다.

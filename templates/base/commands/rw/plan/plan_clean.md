@@ -22,12 +22,20 @@ allowed-tools: Bash, Read, AskUserQuestion
 
 본 플랜은 `{slug}.md`이며, `{slug}.workshop.md`와 `{slug}-agent-*.md`는 그 플랜에 딸린 **부수 파일**이다. 부수 파일을 독립 항목으로 세지 않고 본 플랜에 묶어서 취급한다.
 
+파일명 패턴만으로 부수 파일을 판정하면 안 된다. slug 자체에 `-agent-`가 들어간 본 플랜(예: `fix-agent-timeout.md`)이 목록에서 영영 사라져 삭제도 되지 않는다. **대응하는 본 플랜이 실제로 존재할 때만** 부수 파일로 판정한다.
+
 ```bash
 for f in ~/.claude/plans/*.md; do
-  case "$f" in *.workshop.md|*-agent-*.md) continue;; esac
+  b=$(basename "$f" .md)
+  case "$b" in
+    *.workshop) [ -e ~/.claude/plans/"${b%.workshop}".md ] && continue ;;
+  esac
+  case "$b" in
+    *-agent-*) [ -e ~/.claude/plans/"${b%%-agent-*}".md ] && continue ;;
+  esac
   printf '%s\t%s\t%s\n' \
     "$(date -r "$f" +%Y-%m-%d)" \
-    "$(basename "$f" .md)" \
+    "$b" \
     "$(head -20 "$f" | grep -m1 '^#' | sed 's/^#*[[:space:]]*//')"
 done | sort
 ```
@@ -60,31 +68,39 @@ find ~/.claude/plans -maxdepth 1 -name '*.md' -mtime +{일수}
 
 ## 4단계: 확인
 
-삭제 후보를 표로 제시한다. 열은 번호, 최종 수정일, 제목, 프로젝트, 파일 수(부수 파일 포함), 크기로 구성한다. 합계 파일 수와 확보될 용량을 함께 보여준다.
+삭제 후보를 표로 제시한다. 열은 번호, 최종 수정일, 제목, 프로젝트, 파일 수(부수 파일 포함), 크기로 구성한다. 합계 파일 수와 확보될 용량을 함께 보여준다. 이때 각 후보의 최종 수정 시각(`stat -f %m`)을 기록해 둔다 — 5단계에서 대조할 기준값이다.
 
 **사용자가 명시적으로 승인하기 전에는 어떤 파일도 삭제하지 않는다.** 인자로 일수를 받은 경우에도 자동 삭제하지 않고 반드시 확인을 거친다.
 
 ## 5단계: 삭제
 
-승인된 각 플랜에 대해 본 플랜과 부수 파일을 함께 삭제한다. 본 플랜만 지워 부수 파일이 고아로 남지 않게 한다.
+`~/.claude/plans`는 모든 프로젝트가 공유하는 전역 디렉토리이고, 2단계 수집부터 여기까지는 사용자 확인 대기가 끼어 있다. 그동안 다른 세션이 플랜을 새로 쓰거나 갱신했을 수 있으므로 **삭제 직전에 후보별로 최종 수정 시각을 다시 확인한다.**
 
-```bash
-rm -f ~/.claude/plans/{slug}.md \
-      ~/.claude/plans/{slug}.workshop.md \
-      ~/.claude/plans/{slug}-agent-*.md
-```
+1. 각 후보의 현재 수정 시각을 4단계에서 기록한 값과 대조한다:
+   ```bash
+   stat -f %m ~/.claude/plans/{slug}.md
+   ```
+2. 값이 달라졌으면 그 후보는 **건너뛴다.** 승인 이후 갱신됐다는 뜻이며, 진행 중인 세션의 플랜일 수 있다. 건너뛴 항목과 사유를 결과 보고에 남긴다.
+3. 값이 같은 후보만, 본 플랜과 부수 파일을 함께 삭제한다. 본 플랜만 지워 부수 파일이 고아로 남지 않게 한다.
+   ```bash
+   rm -f ~/.claude/plans/{slug}.md \
+         ~/.claude/plans/{slug}.workshop.md \
+         ~/.claude/plans/{slug}-agent-*.md
+   ```
 
 ## 결과 보고
 
 - 삭제한 플랜 수와 실제 파일 수
 - 확보한 용량
 - 삭제한 플랜 목록(날짜, 제목)
+- 5단계 2항으로 건너뛴 항목이 있으면 그 목록과 사유(승인 이후 갱신됨)
 - `~/.claude/plans`에 남은 플랜 수
 
 ## 하지 말아야 할 것
 
 - 사용자 승인 없이 삭제하기 (인자로 일수를 받았더라도 확인은 반드시 거친다)
 - 오늘 수정된 플랜을 확인 없이 후보에 포함하기 (진행 중 세션의 플랜일 수 있다)
+- 승인 이후 갱신된 플랜을 그대로 삭제하기 (5단계에서 수정 시각을 대조하고, 달라졌으면 건너뛴다)
 - 본 플랜만 삭제하고 부수 파일(`{slug}.workshop.md`, `{slug}-agent-*.md`)을 남기기
 - `~/.claude/plans` 밖의 경로를 건드리기
 - 인자가 숫자가 아닌데 임의로 해석해서 진행하기

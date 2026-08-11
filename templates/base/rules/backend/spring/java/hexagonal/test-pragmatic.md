@@ -1,3 +1,8 @@
+---
+description: 계층별 테스트 전략(Domain 단위·서비스 실제 빈 통합·Adapter)과 stereotype 기반 테스트 규칙 (Hexagonal — Pragmatic flavor)
+globs: "**/src/test/**"
+---
+
 # 테스트 작성 규칙 (Hexagonal — Pragmatic flavor)
 
 계층별 검증 대상과 필요한 인프라를 정의한다. 이 파일은 Pragmatic(실용) flavor 버전으로, 애플리케이션 서비스를 **실제 빈 통합 방식**으로 검증하고, stereotype 기반 테스트 애노테이션·픽스처·Instancio·ArchUnit을 사용한다.

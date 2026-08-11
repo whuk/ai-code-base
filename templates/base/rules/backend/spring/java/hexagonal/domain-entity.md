@@ -1,10 +1,15 @@
+---
+description: 도메인 클래스 작성 시 적용되는 DDD Rich Domain Model 규칙 (Hexagonal — Pragmatic flavor, 도메인=JPA 엔티티)
+globs: "**/domain/**"
+---
+
 # DDD Rich Domain 클래스 작성 규칙 (Hexagonal — Pragmatic flavor: 도메인=엔티티)
 
 도메인 패키지 내 클래스를 작성하거나 수정할 때 다음 원칙을 따른다. 이 파일은 Hexagonal 패키징을 쓰되 **Domain 클래스가 JPA 엔티티를 겸하는**(`@Entity` 마커 + `orm.xml`) Pragmatic(실용) flavor에 적용되는 버전이다. 별도의 `{Domain}JpaEntity`를 두지 않고, Domain이 곧 영속성 대상이다.
 
 이 프로젝트가 Clean(엄격) flavor를 채택했다면 이 파일은 적용 대상이 아니다. Clean flavor는 Domain을 순수 POJO로 두고 `{Domain}JpaEntity`를 완전히 분리하는 버전(`domain.md`, 원래 이름)이 대신 적용되며, `/rw:init`이 선택한 flavor에 맞는 한 버전만 정규 이름(`domain.md`)으로 남긴다. 두 flavor는 한 프로젝트에서 동시에 쓰지 않는다.
 
-이 프로젝트가 Layered를 채택했다면 이 파일은 적용 대상이 아니다(`layered/domain.md` 참조). 마찬가지로 Kotlin을 채택했다면 적용 대상이 아니다 — Pragmatic flavor는 현재 Java 전용으로 제공된다. 또한 SQL-first(ORM 미사용)나 WebFlux(R2DBC)를 채택했다면 적용 대상이 아니다 — 이 flavor는 블로킹 JPA를 전제한다.
+이 프로젝트가 Layered를 채택했다면 이 파일은 적용 대상이 아니다(`layered/domain.md` 참조). 마찬가지로 Kotlin을 채택했다면 적용 대상이 아니다(`kotlin/hexagonal/domain-entity.md` 참조). 또한 SQL-first(ORM 미사용)나 WebFlux(R2DBC)를 채택했다면 적용 대상이 아니다 — 이 flavor는 블로킹 JPA를 전제한다.
 
 ## 1. Rich Domain Model
 

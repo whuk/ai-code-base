@@ -1,3 +1,8 @@
+---
+description: Hexagonal 패키지 구조, 의존 방향, provided/required 포트 작성 규칙 (Pragmatic flavor, Kotlin)
+globs: "**/domain/**,**/application/**,**/adapter/**"
+---
+
 # Ports & Adapters 구조 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
 
 Controller, Application Service, Domain, Persistence 간의 의존 방향과 데이터 전달 규칙을 정의한다. 이 파일은 Pragmatic(실용) flavor의 Kotlin 버전으로, `provided`/`required` 포트 관용구와 역할 기반 세분 포트, Spring Data 리포지토리를 곧 드리븐 포트로 쓰는 실용 헥사고날을 다룬다.
