@@ -207,6 +207,11 @@ describe("Spring Kotlin Hexagonal JPA MVC Pragmatic (mongo on)", () => {
     expect(o).toContain("agents/spring-hexagonal-tdd-implementer.md");
     expect(o).not.toContain("agents/spring-tdd-implementer.md");
   });
+
+  it("drops the openapi spec author agent, whose yaml-first premise is gone", () => {
+    const o = outputs(a);
+    expect(o).not.toContain("agents/spring-openapi-spec-author.md");
+  });
 });
 
 describe("Spring Java Hexagonal SQL-first MVC (clean fixed)", () => {

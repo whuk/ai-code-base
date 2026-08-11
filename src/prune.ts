@@ -309,8 +309,11 @@ function pruneHexagonalFlavor(s: Selector, a: Answers, langDir: string): void {
     s.rename(`${hexDir}/service-layer-pragmatic.md`, `${hexDir}/service-layer.md`);
     s.removeFile(`${hexDir}/test.md`);
     s.rename(`${hexDir}/test-pragmatic.md`, `${hexDir}/test.md`);
-    // Web: spec-first api-dto removed, code-first kept.
+    // Web: spec-first api-dto removed, code-first kept. The spec author agent goes with
+    // it — it is written around "this project is yaml-first" and openapi.yaml, so its
+    // premise disappears under code-first.
     s.removeFile(`${SPRING}/api-dto.md`);
+    s.removeFile("agents/spring-openapi-spec-author.md");
     if (sp.mongodb) {
       s.notice(
         "Pragmatic flavor + MongoDB: test-mongodb.md의 통합 base class 표는 Clean 기준 서술입니다. Pragmatic의 통합 테스트 관례(test.md 2.2)와 함께 읽으세요.",
