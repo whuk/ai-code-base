@@ -1,3 +1,8 @@
+---
+description: 도메인 클래스 작성 시 적용되는 DDD Rich Domain Model 규칙 (Hexagonal — Pragmatic flavor, 도메인=JPA 엔티티, Kotlin)
+globs: "**/domain/**"
+---
+
 # DDD Rich Domain 클래스 작성 규칙 (Hexagonal — Pragmatic flavor: 도메인=엔티티)
 
 도메인 패키지 내 클래스를 작성하거나 수정할 때 다음 원칙을 따른다. 이 파일은 Hexagonal 패키징을 쓰되 **Domain 클래스가 JPA 엔티티를 겸하는**(`@Entity` 마커 + `orm.xml`) Pragmatic(실용) flavor의 Kotlin 버전이다. 별도의 `{Domain}JpaEntity`를 두지 않고, Domain이 곧 영속성 대상이다.

@@ -1,3 +1,8 @@
+---
+description: Spring Data 리포지토리를 드리븐 포트로 쓰는 영속성 규칙과 쿼리 도구 선택 (Hexagonal — Pragmatic flavor)
+globs: "**/required/**,**/*Repository.java"
+---
+
 # Repository 규칙 (Hexagonal — Pragmatic flavor)
 
 드리븐 포트로서의 영속성 리포지토리 작성 규칙을 다룬다. 이 파일은 Pragmatic(실용) flavor 버전으로, **Spring Data `Repository<Domain, Id>`를 곧 `required` 드리븐 포트로** 사용한다. 적용 대상은 Domain 클래스 자체다(도메인=엔티티, `domain.md`).

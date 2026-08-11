@@ -60,12 +60,12 @@ disable-model-invocation: true     # 선택. 사용자만 트리거하게 제한
 ---
 name: <kebab-case 이름>
 description: <이 에이전트를 언제 위임하는지, 형제 에이전트와의 구분점 포함>
-tools: <콤마 구분 목록>            # 전체 도구 허용 시 생략하지 말고 tools: all 로 명시
+tools: <콤마 구분 목록>            # 전체 도구 허용 시 생략하지 말고 tools: '*' 로 명시
 model: inherit | opus | sonnet | haiku
 ---
 ```
 
-- `tools` 필드를 생략해 "전체 허용"을 암묵적으로 표현하지 않는다. `tools: all`로 명시한다.
+- `tools` 필드를 생략해 "전체 허용"을 암묵적으로 표현하지 않는다. `tools: '*'`로 명시한다. 와일드카드는 YAML 앵커 문법과 충돌하지 않도록 작은따옴표로 감싼다.
 
 ### 3.4. Meta (CLAUDE.md)
 

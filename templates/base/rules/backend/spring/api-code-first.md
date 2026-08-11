@@ -1,3 +1,8 @@
+---
+description: 코드-first 웹 계층(Controller·요청/응답 DTO 수기 작성) 규칙 (Pragmatic flavor)
+globs: "**/adapter/webapi/**,**/*Controller.java,**/*Controller.kt,**/*Api.java,**/*Api.kt"
+---
+
 # 코드-first 웹 계층 규칙 (Pragmatic flavor)
 
 웹 계층의 Controller와 Request/Response DTO를 **코드로 직접 작성**하는 규칙이다. 이 파일은 Pragmatic(실용) flavor에 적용된다. `shared/rest-api.md`의 REST 설계 규약(URI, 상태 코드, 페이지네이션, 에러 형식)은 그대로 전제한다.
