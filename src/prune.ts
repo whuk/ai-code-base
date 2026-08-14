@@ -353,12 +353,12 @@ function pruneNest(s: Selector, a: Answers): void {
     );
   }
 
-  // Fullstack NestJS: frontend globs may match backend TS.
+  // Fullstack NestJS: frontend rule paths may match backend TS.
   if (a.area === "fullstack") {
     const root = n.frontendRoot?.trim();
     const hint = root ? ` (예: \`**/*.ts\` → \`${root}/**/*.ts\`)` : "";
     s.notice(
-      `백엔드·프론트엔드가 모두 TypeScript이므로 frontend/*.md의 globs가 백엔드 소스에도 매칭될 수 있습니다. 필요하면 프론트엔드 소스 루트로 직접 좁히세요${hint}.`,
+      `백엔드·프론트엔드가 모두 TypeScript이므로 frontend/*.md의 paths가 백엔드 소스에도 매칭될 수 있습니다. 필요하면 프론트엔드 소스 루트로 직접 좁히세요${hint}.`,
     );
   }
 }

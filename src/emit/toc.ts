@@ -1,6 +1,6 @@
 // Build the "rules reference" section injected into GEMINI.md / AGENTS.md.
-// Since neither tool supports glob-conditional loading, we surface each rule's
-// path + description + the glob that tells the agent *when* to read it.
+// Since neither tool supports path-conditional loading, we surface each rule's
+// path + description + the `paths` patterns that tell the agent *when* to read it.
 
 import { parse } from "../transform/frontmatter.js";
 import { read } from "./fsutil.js";
@@ -9,7 +9,7 @@ import type { ResolvedFile } from "./resolve.js";
 export interface RuleEntry {
   path: string; // target-relative rule path
   description: string;
-  globs: string;
+  paths: string[];
 }
 
 export function collectRuleEntries(
@@ -24,7 +24,7 @@ export function collectRuleEntries(
       return {
         path: toTargetPath(f.destRel),
         description: String(data.description ?? "").trim(),
-        globs: String(data.globs ?? "").trim(),
+        paths: Array.isArray(data.paths) ? data.paths.map((p) => String(p).trim()) : [],
       };
     });
 }
@@ -38,7 +38,7 @@ export function renderRulesSection(entries: RuleEntry[], title: string): string 
     "",
   ];
   for (const e of entries) {
-    const when = e.globs ? ` — 적용 대상: \`${e.globs}\`` : "";
+    const when = e.paths.length ? ` — 적용 대상: \`${e.paths.join(", ")}\`` : "";
     const desc = e.description ? `: ${e.description}` : "";
     lines.push(`- \`${e.path}\`${desc}${when}`);
   }
