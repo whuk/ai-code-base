@@ -23,6 +23,7 @@ model: opus
    - **fastapi.md 3번** — Domain이 SQLAlchemy `Mapped`/`Column`을 직접 참조(분리 원칙 위반, 분리하기로 한 경우에 한함).
    - **fastapi.md 4번** — 동적 검색 조건을 조합 없이 나열, escalation ladder 무시한 선제적 원시 SQL 사용, SQL 문자열 연결/포매팅 조립(바인드 파라미터 미사용).
    - **fastapi.md 5번** — Service 함수 내부에서 세션/커넥션 직접 생성(`Depends` 주입 원칙 위반).
+   - **fastapi.md 7번** — `time.sleep`으로 순서 보장, 어서션 대상 필드·경계값의 랜덤 생성, `__random_seed__` 고정 없는 랜덤 데이터 사용.
    - **fastapi.md 8번** — Service/Domain 계층에서 `HTTPException` 직접 던지기(안쪽 계층의 역방향 의존), `RequestValidationError` 400 재매핑·Problem Details 전역 핸들러를 우회한 에러 응답 직접 조립.
    - **fastapi.md 9번** — `async def` 라우터/서비스에서 동기 블로킹 호출(동기 DB 드라이버, `requests`, `time.sleep`, 대용량 동기 파일 I/O), 격리(`run_in_threadpool`/`def` 선언) 없는 동기 전용 라이브러리 사용.
    - **과설계**: 도메인이 단순한데 불필요하게 무거운 클래스 계층을 도입했는지도 함께 본다(`fastapi.md`가 명시적으로 완화한 지점이므로, 반대로 과설계는 이 스택에서 특히 지적 대상이다).

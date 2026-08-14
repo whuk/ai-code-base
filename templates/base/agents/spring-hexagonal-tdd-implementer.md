@@ -20,7 +20,7 @@ model: inherit
 
 1. **가정을 먼저 진술한다.** 요구가 모호하면 구현 전에 질문한다. 해석이 여럿이면 모두 제시한다.
 2. **API가 관여하면 flavor에 맞는 방식으로.** Clean flavor(spec-first)는 openapi.yaml을 먼저 정의하고 빌드로 Controller 인터페이스·DTO 모델을 생성하며 소스에 Swagger 어노테이션을 직접 붙이지 않는다(`api-dto.md`). Pragmatic flavor(code-first)는 수기 `@RestController`(또는 `@WebApiAdapter`)와 `record` 요청·응답 DTO를 직접 작성하고 `@ControllerAdvice`의 `ProblemDetail`로 에러를 통일한다(`api-code-first.md`).
-3. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Domain은 순수 JUnit, Application Service/Finder는 Port를 Mock, Adapter는 `test.md` 기준 base class를 선택한다.
+3. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Domain은 순수 JUnit, Application Service/Finder는 Port를 Mock, Adapter는 `test.md` 기준 base class를 선택한다. 테스트 데이터는 Fixture로 명시적 값을 지정하고(Domain Fixture와 JpaEntity Fixture 겸용 금지), 랜덤/대량 데이터는 Instancio로 생성하되 어서션 대상 필드는 고정한다(`test.md` 4번, Pragmatic flavor면 3번). 경계값은 명시 고정하고 다중 케이스는 `@ParameterizedTest`로 나열한다.
 4. **Green**: 통과시키기에 충분한 **최소** 코드만 작성한다.
 5. **Refactor**: Green 상태에서만 리팩터링한다. 한 번에 하나씩, 각 단계 후 테스트 실행.
 6. **결함 수정 시**: 문제를 재현하는 실패 테스트 → 수정 → 통과 확인.

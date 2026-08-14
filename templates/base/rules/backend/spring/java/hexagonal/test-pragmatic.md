@@ -1,6 +1,7 @@
 ---
 description: 계층별 테스트 전략(Domain 단위·서비스 실제 빈 통합·Adapter)과 stereotype 기반 테스트 규칙 (Hexagonal — Pragmatic flavor)
-globs: "**/src/test/**"
+paths:
+  - "**/src/test/**"
 ---
 
 # 테스트 작성 규칙 (Hexagonal — Pragmatic flavor)
@@ -47,9 +48,18 @@ globs: "**/src/test/**"
 
 - 정렬/타임스탬프가 필요한 테스트에서 `Thread.sleep`을 쓰지 않고 픽스처에 명시적 값을 지정한다.
 - 랜덤/대량 데이터가 필요하면 Instancio(`Instancio.create(...)` 등)로 생성한다. 도메인 규칙을 위반하는 무효 객체가 생성되지 않도록 필요한 필드는 픽스처/커스터마이저로 고정한다.
+- 어서션 대상 필드도 랜덤에 맡기지 않고 픽스처 또는 커스터마이저(`set`/`supply`)로 명시적으로 고정한다. 어서션이 랜덤 값에 의존하면 안 된다.
+- 랜덤 생성 테스트는 실패를 재현할 수 있어야 한다. 테스트 클래스에 `@ExtendWith(InstancioExtension.class)`를 부착하면 실패 시 seed가 리포트되며, `@Seed` 또는 `Instancio.of(...).withSeed(...)`로 해당 seed를 고정해 재현한다.
 
-## 4. 금지 패턴
+## 4. 경계값·파라미터라이즈드 테스트
+
+- 경계값(최소/최대, 경계 ±1, 빈 값, 임계점)은 랜덤으로 뽑지 않고 명시적으로 고정한다. 랜덤 데이터는 경계값 커버리지를 보장하지 않는다.
+- 같은 로직을 여러 입력으로 검증할 때는 테스트 메서드를 복사하지 않고 `@ParameterizedTest`(`@ValueSource`/`@CsvSource`/`@MethodSource`)로 케이스를 나열한다. Domain 불변 조건의 경계 검증(2.1)에 특히 유용하다.
+- 검증 규칙(길이, 범위, 패턴)이 있는 입력은 유효 경계와 무효 경계 양쪽 케이스를 모두 포함한다 (예: 길이 제한이 100이면 100은 성공, 101은 실패).
+
+## 5. 금지 패턴
 
 - 테스트 클래스에 `@SpringBootTest`/`@AutoConfigureMockMvc`/`@Transactional`을 직접 선언하지 않는다(stereotype/base class 사용).
 - Application Service 테스트에서 실제 동작 검증을 회피하려고 모든 Port를 Mock으로 대체하지 않는다(이 flavor는 통합 검증이 기본이다 — 2.2).
 - `Thread.sleep`으로 실행 순서나 타임스탬프 차이를 보장하지 않는다.
+- 어서션 대상 필드나 경계값을 랜덤으로 생성하지 않는다. seed 재현 수단 없이 랜덤 데이터를 사용하지 않는다.

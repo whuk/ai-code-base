@@ -1,6 +1,7 @@
 ---
 description: 도메인 클래스 작성 시 적용되는 DDD Rich Domain Model 규칙 (Hexagonal — 영속성 완전 분리)
-globs: "**/domain/**"
+paths:
+  - "**/domain/**"
 ---
 
 # DDD Rich Domain 클래스 작성 규칙 (Hexagonal)

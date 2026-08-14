@@ -1,6 +1,13 @@
 ---
 description: NestJS 백엔드 고유 컨벤션 (backend/shared/architecture.md 전제)
-globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.repository.ts"
+paths:
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
+  - "**/*.repository.ts"
+  - "**/*.spec.ts"
+  - "**/*.e2e-spec.ts"
 ---
 
 # NestJS 규칙
@@ -56,6 +63,9 @@ globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.re
 - Service/Finder 단위 테스트에서 Repository 등 하위 의존성은 custom provider(`{ provide: OrderRepository, useValue: mock }`)로 대체한다. 실제 DB 접근 없이 오케스트레이션 로직만 검증하고, 실제 영속성 동작(매핑, 쿼리 조합)은 통합 테스트에서 검증한다.
 - 통합/E2E 테스트: Supertest로 HTTP 요청을 검증한다.
 - `Thread.sleep` 상당의 시간 기반 동기화(임의 `setTimeout` 대기)를 사용하지 않는다. 결정적 데이터는 Fixture/Factory로 생성한다.
+- Factory는 Fishery(`Factory.define`)로 도메인/DTO별로 정의하고, 고유값이 필요한 필드는 `sequence`로 만든다. 랜덤 값이 필요한 필드는 `@faker-js/faker`를 병용하되 테스트 셋업에서 `faker.seed(...)`를 고정해 실패를 재현할 수 있게 한다.
+- 어서션 대상 필드와 비즈니스 규칙에 관여하는 필드는 랜덤에 맡기지 않고 `factory.build({...})` 오버라이드로 명시적으로 고정한다. 어서션이 랜덤 값에 의존하면 안 된다.
+- 경계값(최소/최대, 경계 ±1, 빈 값, 임계점)은 랜덤으로 뽑지 않고 명시적으로 고정한다. 같은 로직을 여러 입력으로 검증할 때는 `it.each`/`test.each`로 케이스를 나열하고, 검증 규칙(길이, 범위, 패턴)이 있는 입력은 유효 경계와 무효 경계 양쪽 케이스를 모두 포함한다.
 
 ## 9. 에러 응답 (RFC 9457)
 

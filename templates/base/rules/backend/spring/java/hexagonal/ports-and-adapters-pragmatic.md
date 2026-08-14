@@ -1,6 +1,9 @@
 ---
 description: Hexagonal 패키지 구조, 의존 방향, provided/required 포트 작성 규칙 (Pragmatic flavor)
-globs: "**/domain/**,**/application/**,**/adapter/**"
+paths:
+  - "**/domain/**"
+  - "**/application/**"
+  - "**/adapter/**"
 ---
 
 # Ports & Adapters 구조 규칙 (Pragmatic flavor)

@@ -1,6 +1,11 @@
 ---
 description: SQL-first(ORM 미사용) 영속성 규칙 — JdbcClient 기본 + jOOQ 동적 조건 조립 (Layered/Hexagonal 공통, Kotlin)
-globs: "**/*Repository*.kt,**/*PersistenceAdapter.kt,**/*RowMapper.kt,**/*SqlBuilder.kt,**/*Conditions.kt"
+paths:
+  - "**/*Repository*.kt"
+  - "**/*PersistenceAdapter.kt"
+  - "**/*RowMapper.kt"
+  - "**/*SqlBuilder.kt"
+  - "**/*Conditions.kt"
 ---
 
 # SQL-first 영속성 규칙 (ORM 미사용)

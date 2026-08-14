@@ -1,6 +1,10 @@
 ---
 description: FastAPI 영속성 규칙 — SQL-first(ORM 미사용, SQLAlchemy Core/async 드라이버) (fastapi.md 전제)
-globs: "**/router.py,**/schemas.py,**/service.py,**/repository.py"
+paths:
+  - "**/router.py"
+  - "**/schemas.py"
+  - "**/service.py"
+  - "**/repository.py"
 ---
 
 # FastAPI 영속성 규칙 — SQL-first (ORM 미사용)

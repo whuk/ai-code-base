@@ -24,6 +24,7 @@ model: opus
    - **nestjs.md 4번** — Domain 클래스에 TypeORM 컬럼 데코레이터(`@Column`, `@OneToMany` 등) 직접 부착(`EntitySchema` 사용 원칙 위반), (SQL-first 프로젝트) Domain의 Kysely 스키마 타입 참조.
    - **nestjs.md 5번** — 동적 검색 조건을 조합 없이 나열, escalation ladder 무시한 선제적 원시 쿼리 사용, SQL 문자열 연결 조립(파라미터 바인딩 미사용).
    - **nestjs.md 6번** — 쓰기 메서드에 트랜잭션 누락, Finder에 불필요한 트랜잭션 개방.
+   - **nestjs.md 8번** — 임의 `setTimeout` 대기로 순서 보장, 어서션 대상 필드·경계값의 랜덤 생성, `faker.seed(...)` 고정 없는 랜덤 데이터 사용.
    - **nestjs.md 9번** — Domain/Service 계층에서 `HttpException` 계열 직접 던지기(안쪽 계층의 역방향 의존), 전역 Exception Filter를 우회한 에러 응답 직접 조립.
    - **CLAUDE.md** — 구조적/동작 변경 혼재, 과복잡화(YAGNI 위반), 불필요한 추상화.
 3. **일반 품질 점검**: 정확성 버그(경계 조건, null, 동시성/레이스 컨디션), 중복, 명명, 단일 책임 위반. 발생 불가능한 시나리오에 대한 방어 코드(과잉 방어)는 단순화 제안.
@@ -31,7 +32,7 @@ model: opus
 ## 참조 규칙
 
 - `.claude/rules/backend/shared/architecture.md`
-- `.claude/rules/backend/nestjs/nestjs.md` (2, 3, 4, 5, 6, 9번)
+- `.claude/rules/backend/nestjs/nestjs.md` (2, 3, 4, 5, 6, 8, 9번)
 - `.claude/CLAUDE.md`
 
 ## 산출물 형식

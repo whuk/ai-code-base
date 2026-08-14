@@ -1,6 +1,11 @@
 ---
 description: NestJS 영속성 규칙 — TypeORM (EntitySchema 매핑, nestjs.md 전제)
-globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.repository.ts"
+paths:
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
+  - "**/*.repository.ts"
 ---
 
 # NestJS 영속성 규칙 — TypeORM

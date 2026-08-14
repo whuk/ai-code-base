@@ -1,6 +1,8 @@
 ---
 description: WebFlux 리액티브 MongoDB 병용 규칙 — ReactiveMongoRepository/ReactiveMongoTemplate과 Document 매핑 (Layered/Hexagonal 공통, R2DBC 병용 전제)
-globs: "**/*Document.java,**/*MongoRepository.java"
+paths:
+  - "**/*Document.java"
+  - "**/*MongoRepository.java"
 ---
 
 # 리액티브 MongoDB 영속성 규칙 (WebFlux 전용, R2DBC 병용)

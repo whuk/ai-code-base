@@ -1,6 +1,5 @@
 ---
 description: Controller, Service, Domain 계층 간 데이터 전달 및 DTO/Domain 매핑 규칙
-alwaysApply: true
 ---
 
 # 계층 간 통신 및 DTO/Domain 매핑 규칙

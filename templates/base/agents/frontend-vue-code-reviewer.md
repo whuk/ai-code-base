@@ -19,7 +19,7 @@ model: opus
 
 1. **리뷰 대상 파악**: 지시가 없으면 `git diff`, `git diff --staged`, `git diff main...HEAD`로 변경분을 확인해 리뷰 범위를 정한다. 변경된 라인과 그 맥락에 집중한다. 무관한 기존 코드는 지적하지 않는다(요청 시 예외).
 2. **검토 기준 적용 (프로젝트 frontend rules 위반 우선)**: 리뷰 전 관련 규칙을 읽고 그 기준으로 판정한다.
-   - **frontend/typescript.md** — `any` 타입 사용, feature 간 직접 import, 서버 데이터를 클라이언트 상태 스토어에 그대로 복사, 테스트에서 `data-testid`를 role/label보다 우선 사용, 외부 경계 데이터에 런타임 검증(Zod 등) 누락.
+   - **frontend/typescript.md** — `any` 타입 사용, feature 간 직접 import, 서버 데이터를 클라이언트 상태 스토어에 그대로 복사, 테스트에서 `data-testid`를 role/label보다 우선 사용, 외부 경계 데이터에 런타임 검증(Zod 등) 누락, 테스트에서 어서션 대상 필드·경계값의 랜덤 생성이나 `faker.seed(...)` 고정 없는 랜덤 데이터 사용.
    - **frontend/vue.md** — 신규 컴포넌트에 Options API 사용, Vuex를 신규 상태관리로 채택, React 전용 라이브러리(React Testing Library, react-hook-form 등)를 변환 없이 반입, `<script setup>` 내부에서 CVA variant 등 재사용 상수를 매 인스턴스 생성마다 재선언, 서버 상태를 vue-query가 아닌 Pinia로 관리, composable `use` 접두사 명명 위반.
    - **CLAUDE.md** — 구조적/동작 변경 혼재, 과복잡화(YAGNI 위반), 불필요한 추상화.
 3. **일반 품질 검토**: 정확성 버그(경계 조건, null, 반응성 상실, 레이스 컨디션), 중복, 명명, 단일 책임 위반. 발생 불가능한 시나리오에 대한 방어 코드(과잉 방어)는 단순화 제안.

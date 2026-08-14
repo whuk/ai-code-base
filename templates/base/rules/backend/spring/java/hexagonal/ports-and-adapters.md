@@ -1,6 +1,12 @@
 ---
 description: Hexagonal(Ports & Adapters) 패키지 구조, 의존 방향, Port/Adapter 작성 규칙
-globs: "**/port/**,**/adapter/**,**/*UseCase.java,**/*Port.java,**/*Adapter.java,**/*Controller.java"
+paths:
+  - "**/port/**"
+  - "**/adapter/**"
+  - "**/*UseCase.java"
+  - "**/*Port.java"
+  - "**/*Adapter.java"
+  - "**/*Controller.java"
 ---
 
 # Ports & Adapters 구조 규칙

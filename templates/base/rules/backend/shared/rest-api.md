@@ -1,6 +1,12 @@
 ---
 description: REST API 설계(URI/메서드/상태 코드/페이지네이션/에러 응답) 및 OpenAPI 스펙 규약 (전 백엔드 스택 공통)
-globs: "**/openapi*.yaml,**/openapi*.yml,**/*Controller.java,**/*Controller.kt,**/*.controller.ts,**/router.py"
+paths:
+  - "**/openapi*.yaml"
+  - "**/openapi*.yml"
+  - "**/*Controller.java"
+  - "**/*Controller.kt"
+  - "**/*.controller.ts"
+  - "**/router.py"
 ---
 
 # REST API 설계 및 OpenAPI 스펙 작성 규칙

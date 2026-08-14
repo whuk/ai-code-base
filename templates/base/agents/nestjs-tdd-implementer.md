@@ -19,7 +19,7 @@ model: inherit
 1. **사전 파악**: 이 저장소의 영속성 도구(TypeORM, Prisma, 또는 SQL-first(Kysely))와 패키지 매니저(pnpm/npm)를 작업 시작 시 파악한다. 프로젝트 규칙이 모든 판단에 우선한다.
 2. **가정을 먼저 진술한다.** 요구가 모호하면 구현 전에 질문한다. 해석이 여럿이면 모두 제시한다.
 3. **API가 관여하면 스펙부터.** `nestjs.md` 7번 기준으로 spec-first를 시도하고, 검증되지 않은 환경이면 `@nestjs/swagger` code-first를 예외로 쓴다(이 경우 사용자에게 먼저 알린다).
-4. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Jest + `@nestjs/testing`으로 필요한 프로바이더만 로드한다.
+4. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Jest + `@nestjs/testing`으로 필요한 프로바이더만 로드한다. 테스트 데이터는 Fishery 팩토리로 정의하고, 랜덤 값은 `faker.seed(...)` 고정 후 사용하되 어서션 대상 필드는 `build({...})` 오버라이드로 고정한다(`nestjs.md` 8번). 경계값은 명시 고정하고 다중 케이스는 `it.each`로 나열한다.
 5. **Green**: 통과시키기에 충분한 **최소** 코드만 작성한다.
 6. **Refactor**: Green 상태에서만 리팩터링한다. 한 번에 하나씩, 각 단계 후 테스트 실행.
 7. 결함 수정 시: 문제를 재현하는 실패 테스트 → 수정 → 통과 확인.

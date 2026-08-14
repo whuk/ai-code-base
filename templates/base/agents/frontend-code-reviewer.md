@@ -19,7 +19,7 @@ model: opus
 
 1. **리뷰 대상 파악**: 지시가 없으면 `git diff`, `git diff --staged`, `git diff main...HEAD`로 변경분을 확인해 리뷰 범위를 정한다. 변경된 라인과 그 맥락에 집중한다. 무관한 기존 코드는 지적하지 않는다(요청 시 예외).
 2. **검토 기준 적용 (프로젝트 frontend rules 위반 우선)**: 리뷰 전 관련 규칙을 읽고 그 기준으로 판정한다.
-   - **frontend/typescript.md** — `any` 타입 사용, feature 간 직접 import, 서버 데이터를 클라이언트 상태 스토어에 그대로 복사, CVA variant를 컴포넌트 함수 내부에서 매 렌더링마다 생성, 테스트에서 `data-testid`를 role/label보다 우선 사용, 외부 경계 데이터에 런타임 검증(Zod 등) 누락.
+   - **frontend/typescript.md** — `any` 타입 사용, feature 간 직접 import, 서버 데이터를 클라이언트 상태 스토어에 그대로 복사, CVA variant를 컴포넌트 함수 내부에서 매 렌더링마다 생성, 테스트에서 `data-testid`를 role/label보다 우선 사용, 외부 경계 데이터에 런타임 검증(Zod 등) 누락, 테스트에서 어서션 대상 필드·경계값의 랜덤 생성이나 `faker.seed(...)` 고정 없는 랜덤 데이터 사용.
    - **frontend/nextjs.md** (Next.js 프로젝트) — 불필요하게 넓은 범위의 `"use client"`, Server Component에서 자기 자신의 Route Handler를 fetch로 호출, 캐시 무효화가 필요한 요청에서 캐시 옵션 누락.
    - **frontend/vite.md** (Vite 프로젝트) — `resolve.alias`와 `tsconfig.json` `paths` 불일치, 근거 없이 라우팅 라이브러리 교체.
    - **CLAUDE.md** — 구조적/동작 변경 혼재, 과복잡화(YAGNI 위반), 불필요한 추상화.

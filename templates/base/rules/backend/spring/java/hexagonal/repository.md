@@ -1,6 +1,10 @@
 ---
 description: Outbound Persistence Adapter 작성 시 동적 검색 조건 처리 방식과 쿼리 작성 규칙 (Hexagonal)
-globs: "**/*PersistenceAdapter.java,**/*JpaEntity.java,**/*JpaRepository.java,**/*Specifications.java"
+paths:
+  - "**/*PersistenceAdapter.java"
+  - "**/*JpaEntity.java"
+  - "**/*JpaRepository.java"
+  - "**/*Specifications.java"
 ---
 
 # Outbound Persistence Adapter 규칙

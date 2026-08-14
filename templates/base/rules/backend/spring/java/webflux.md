@@ -1,6 +1,5 @@
 ---
 description: Spring WebFlux(리액티브 스택) 규칙 — Reactor 타입 경계, 트랜잭션, 블로킹 금지 규율, 테스트 (Layered/Hexagonal 공통)
-alwaysApply: true
 ---
 
 # Spring WebFlux 규칙 (리액티브 스택)

@@ -1,6 +1,10 @@
 ---
 description: WebFlux 리액티브 영속성 규칙 — Spring Data R2DBC 기본 + jOOQ 동적 조건 조립 + DatabaseClient (Layered/Hexagonal 공통)
-globs: "**/*Repository*.java,**/*PersistenceAdapter.java,**/*Row.java,**/*SqlBuilder.java"
+paths:
+  - "**/*Repository*.java"
+  - "**/*PersistenceAdapter.java"
+  - "**/*Row.java"
+  - "**/*SqlBuilder.java"
 ---
 
 # R2DBC 영속성 규칙 (WebFlux 전용)

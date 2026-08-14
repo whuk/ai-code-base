@@ -1,6 +1,11 @@
 ---
 description: QueryDSL·JdbcClient·jOOQ 사용 상세 규칙 (Escalation Ladder Level 2~3, Layered/Hexagonal 공통, Kotlin)
-globs: "**/*Repository*.kt,**/*PersistenceAdapter.kt,**/*JpaEntity.kt,**/*Specifications.kt,**/*SqlBuilder.kt"
+paths:
+  - "**/*Repository*.kt"
+  - "**/*PersistenceAdapter.kt"
+  - "**/*JpaEntity.kt"
+  - "**/*Specifications.kt"
+  - "**/*SqlBuilder.kt"
 ---
 
 # QueryDSL·JdbcClient·jOOQ 사용 규칙

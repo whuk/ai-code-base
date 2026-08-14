@@ -9,7 +9,7 @@ Kent Beck의 테스트 주도 개발(TDD)과 Tidy First 원칙에 따라 개발�
 
 `/rw:init`은 실제 프로젝트 스택(영역, 백엔드 스택, 언어, 아키텍처 스타일, 영속성 도구, 프론트엔드 프레임워크 등)을 기존 코드에서 자동 감지하거나 질문으로 확정한 뒤, 해당하지 않는 `.claude/rules/`와 `.claude/agents/` 파일을 정리합니다. 파일 본문은 편집하지 않는 순수 선별 동작입니다. 스택별 선택지와 삭제·rename 규칙의 상세는 `init.md`에 있습니다.
 
-이 정리가 전제인 이유는 상호 배타적인 rules 파일(Java/Kotlin, Layered/Hexagonal, Next.js/Vite/Vue 등)이 frontmatter의 glob 설정만으로는 배제되지 않을 수 있기 때문입니다. 이미 `/rw:init`을 실행했거나 이 저장소가 템플릿 원본이라면 건너뛰어도 됩니다.
+이 정리가 전제인 이유는 상호 배타적인 rules 파일(Java/Kotlin, Layered/Hexagonal, Next.js/Vite/Vue 등)이 frontmatter의 `paths` 설정만으로는 배제되지 않기 때문입니다. `paths`는 확장자·디렉토리로 매칭하므로, 같은 `**/domain/**`을 가리키는 Java Layered 규칙과 Hexagonal 규칙은 둘 다 매칭됩니다. 이미 `/rw:init`을 실행했거나 이 저장소가 템플릿 원본이라면 건너뛰어도 됩니다.
 
 ## 2. 개발 방법론
 

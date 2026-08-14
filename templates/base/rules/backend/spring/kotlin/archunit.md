@@ -1,6 +1,7 @@
 ---
 description: 계층 의존 방향과 슬라이스 규율을 ArchUnit 테스트로 강제하는 규칙 (Kotlin, Layered/Hexagonal 공통)
-globs: "**/*ArchitectureTest.kt"
+paths:
+  - "**/*ArchitectureTest.kt"
 ---
 
 # ArchUnit 아키텍처 테스트 규칙 (Kotlin)

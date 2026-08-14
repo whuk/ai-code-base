@@ -32,7 +32,7 @@ model: opus
 - **repository-sql.md** (SQL-first 프로젝트) — SQL 문자열 연결 조립(named parameter 미사용), jOOQ `fetch()` 직접 실행, `DSLContext`에 DataSource 주입, Finder/Service에 SQL/쿼리 조립 배치, Domain에 영속성 애노테이션 부착.
 - **webflux.md / repository-r2dbc.md** (WebFlux 프로젝트) — 이벤트 루프 블로킹 호출(`block()`/`toIterable()`, JDBC 드라이버, `RestTemplate`, `Thread.sleep`), `boundedElastic` 격리 없는 동기 라이브러리 호출, 구독되지 않고 버려지는 `Mono`/`Flux`, Domain에 Reactor/R2DBC 타입 혼입, `{Domain}Row`가 아닌 Domain에 매핑 애노테이션 부착, jOOQ 직접 실행, Port/Service 시그니처에 `{Domain}Row`·R2DBC 타입 노출, 테스트에서 `block()` 어서션이나 MockMvc 사용.
 - **shared/rest-api.md / api-dto.md** — 소스에 Swagger 어노테이션 직접 부착(역방향), URI/상태코드/페이지네이션 규약 위반, DTO 수동 작성.
-- **test.md** — 잘못된 base class 상속(JPA-only에 MongoDB 컨텍스트), 테스트에 `@SpringBootTest` 직접 선언, `Thread.sleep` 사용.
+- **test.md** — 잘못된 base class 상속(JPA-only에 MongoDB 컨텍스트), 테스트에 `@SpringBootTest` 직접 선언, `Thread.sleep` 사용, 어서션 대상 필드·경계값의 랜덤 생성이나 seed 재현 수단 없는 랜덤 데이터 사용(`test.md` 4번·5번).
 - **archunit.md**(Java/Kotlin, 있으면) — 계층 의존 방향(Controller→Service→Repository→Domain)이나 슬라이스 순환을 강제하는 ArchUnit 아키텍처 테스트가 있는데, 변경이 그 경계를 깨거나 테스트가 비활성화(`@Disabled`)·광범위 예외로 우회됐는지 확인한다.
 - **CLAUDE.md** — 구조적/동작 변경 혼재, 과복잡화(YAGNI 위반), 불필요한 추상화, FQCN 본문 직접 사용.
 

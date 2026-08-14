@@ -1,6 +1,8 @@
 ---
 description: JPA Repository 동적 검색 조건 처리 및 쿼리 작성 규칙 (Query Derivation/Specification, Kotlin)
-globs: "**/*Repository*.kt,**/*Specifications.kt"
+paths:
+  - "**/*Repository*.kt"
+  - "**/*Specifications.kt"
 ---
 
 # Repository 계층 규칙

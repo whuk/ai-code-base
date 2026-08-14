@@ -1,6 +1,11 @@
 ---
 description: NestJS 영속성 규칙 — SQL-first(Kysely) (ORM 미사용, Repository가 매핑 전담, nestjs.md 전제)
-globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.repository.ts"
+paths:
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
+  - "**/*.repository.ts"
 ---
 
 # NestJS 영속성 규칙 — SQL-first (Kysely)
