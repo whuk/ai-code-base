@@ -80,7 +80,7 @@ describe("gemini emit", () => {
     expect(gm).toContain(".gemini/rules/backend/");
     // rule entries surface their frontmatter `paths` as the applicability hint
     expect(gm).toContain("적용 대상:");
-    expect(gm).toContain("**/*.java");
+    expect(gm).toContain("**/*.kt");
     // a command TOML has prompt + description keys
     const cmd = files.find((f) => f.startsWith(".gemini/commands/rw/") && f.endsWith(".toml"))!;
     const toml = readFileSync(path.join(dir, cmd), "utf8");
@@ -111,7 +111,7 @@ describe("codex emit", () => {
     expect(am).toContain(".codex/rules/backend/");
     // rule entries surface their frontmatter `paths` as the applicability hint
     expect(am).toContain("적용 대상:");
-    expect(am).toContain("**/*.java");
+    expect(am).toContain("**/*.kt");
     // emitter returns the home-dir prompts caveat
     expect(notes.some((n) => n.includes("~/.codex/prompts/"))).toBe(true);
   });
