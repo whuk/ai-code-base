@@ -1,6 +1,9 @@
 ---
 description: Application Service 분리, 역할 포트 구현, stereotype·트랜잭션 규칙 (Hexagonal — Pragmatic flavor)
-globs: "**/provided/**,**/*Service.java,**/*Finder.java"
+paths:
+  - "**/provided/**"
+  - "**/*Service.java"
+  - "**/*Finder.java"
 ---
 
 # Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Pragmatic flavor)

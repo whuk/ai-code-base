@@ -1,6 +1,11 @@
 ---
 description: QueryDSL·JdbcClient·jOOQ 사용 상세 규칙 (Escalation Ladder Level 2~3, Layered/Hexagonal 공통)
-globs: "**/*Repository*.java,**/*PersistenceAdapter.java,**/*JpaEntity.java,**/*Specifications.java,**/*SqlBuilder.java"
+paths:
+  - "**/*Repository*.java"
+  - "**/*PersistenceAdapter.java"
+  - "**/*JpaEntity.java"
+  - "**/*Specifications.java"
+  - "**/*SqlBuilder.java"
 ---
 
 # QueryDSL·JdbcClient·jOOQ 사용 규칙

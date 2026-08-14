@@ -108,7 +108,7 @@ claude-code-base 템플릿을 실제 프로젝트 스택에 맞게 선별 적용
 - "라우팅 라이브러리는 무엇을 사용합니까?" → TanStack Router(기본 검토 대상) / React Router
 
 (풀스택 + 백엔드 "NestJS" 선택 시)
-- "프론트엔드 소스 루트 경로는 무엇입니까?" (예: `apps/web`, `frontend`, `web`) — 백엔드와 프론트엔드가 모두 TypeScript이라 `frontend/*.md`의 glob(`**/*.ts`)이 백엔드 소스에도 매칭될 수 있다. 이 경로는 파일 편집에 쓰지 않고, 결과 보고에서 "필요하면 이 경로로 glob을 직접 좁히라"는 안내에만 사용한다 (3단계의 해당 안내 규칙 참조)
+- "프론트엔드 소스 루트 경로는 무엇입니까?" (예: `apps/web`, `frontend`, `web`) — 백엔드와 프론트엔드가 모두 TypeScript이라 `frontend/*.md`의 `paths` 패턴(`**/*.ts`)이 백엔드 소스에도 매칭될 수 있다. 이 경로는 파일 편집에 쓰지 않고, 결과 보고에서 "필요하면 이 경로로 `paths`를 직접 좁히라"는 안내에만 사용한다 (3단계의 해당 안내 규칙 참조)
 
 Next.js/Vue.js를 선택한 경우 프론트엔드 세부 질문은 없다.
 
@@ -284,8 +284,8 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 - **Zod 선택 시 `nestjs-*` 에이전트는 수정하지 않는다.** `nestjs-tdd-implementer`/`nestjs-code-reviewer`/`nestjs-domain-designer`는 class-validator 전제로 작성돼 있다. 4단계 보고 시 이 사실을 사용자에게 명시적으로 알린다: "nestjs 에이전트들은 class-validator 전제입니다. Zod 기준으로 활용하려면 에이전트를 별도로 조정해야 합니다."
 
 ### 풀스택 + 백엔드 "NestJS" 선택 시 — 보고만 (파일 편집 없음)
-- 백엔드와 프론트엔드가 모두 TypeScript이므로 `frontend/*.md`의 globs(`**/*.ts`, `**/*.tsx`)가 백엔드 소스에도 매칭될 수 있다. rw:init은 이 globs를 편집하지 않고 원본 그대로 둔다.
-- 대신 4단계 보고에서, 1단계에서 감지했거나 2단계 라운드 3에서 답변받은 프론트엔드 소스 루트 경로를 이용해 "필요하면 `frontend/*.md`의 globs를 이 경로로 직접 좁히라(예: `**/*.ts` → `apps/web/**/*.ts`)"고 안내한다.
+- 백엔드와 프론트엔드가 모두 TypeScript이므로 `frontend/*.md`의 `paths`(`**/*.ts`, `**/*.tsx`)가 백엔드 소스에도 매칭될 수 있다. rw:init은 이 `paths`를 편집하지 않고 원본 그대로 둔다.
+- 대신 4단계 보고에서, 1단계에서 감지했거나 2단계 라운드 3에서 답변받은 프론트엔드 소스 루트 경로를 이용해 "필요하면 `frontend/*.md`의 `paths`를 이 경로로 직접 좁히라(예: `**/*.ts` → `apps/web/**/*.ts`)"고 안내한다.
 
 ### 프론트엔드 "Vite" + 라우팅 라이브러리 선택 시 — 삭제
 - TanStack Router 선택 시: `.claude/rules/frontend/vite-routing-reactrouter.md`를 삭제한다 (`vite-routing-tanstack.md`만 남긴다). 라우팅-무관 공통인 `vite.md`는 그대로 유지한다.
@@ -330,7 +330,7 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 - 해당 시 ArchUnit 안내 (Java·Kotlin 모두 `spring/{java|kotlin}/archunit.md`가 Layered/Hexagonal 양쪽에 유지되어 아키텍처 테스트 강제 대상임)
 - 해당 시 버전 전제 경고 (확정된 버전이 3단계 "언어·프레임워크 버전 — 보고만"의 전제에 미달하는 항목이 있을 때만. 전제를 모두 충족하면 이 항목은 출력하지 않는다). 버전 때문에 파일을 삭제하거나 편집하지 않았음을 함께 명시한다
 - 해당 시 RDB 안내문 (PostgreSQL 외 DB 선택 시: 예시가 PostgreSQL/asyncpg 기준이므로 jOOQ 방언 상수·드라이버를 직접 교체하라는 안내. Oracle·SQL Server처럼 jOOQ 상용 에디션 방언이 필요한 경우 그 사실도 함께)
-- 해당 시 풀스택 NestJS glob 안내문 (frontend globs가 백엔드 TS에도 매칭될 수 있으니 필요하면 프론트엔드 소스 루트로 직접 좁히라는 안내)
+- 해당 시 풀스택 NestJS `paths` 안내문 (frontend `paths`가 백엔드 TS에도 매칭될 수 있으니 필요하면 프론트엔드 소스 루트로 직접 좁히라는 안내)
 - 커밋하지 않았음을 명시하고, 커밋을 원하면 요청하도록 안내
 
 ## 하지 말아야 할 것

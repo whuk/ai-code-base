@@ -1,6 +1,11 @@
 ---
 description: FastAPI 영속성 규칙 — SQLAlchemy ORM (fastapi.md 전제)
-globs: "**/router.py,**/schemas.py,**/service.py,**/repository.py,**/models.py"
+paths:
+  - "**/router.py"
+  - "**/schemas.py"
+  - "**/service.py"
+  - "**/repository.py"
+  - "**/models.py"
 ---
 
 # FastAPI 영속성 규칙 — SQLAlchemy ORM

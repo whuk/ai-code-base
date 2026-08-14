@@ -1,6 +1,8 @@
 ---
 description: Spring Data 리포지토리를 드리븐 포트로 쓰는 영속성 규칙과 쿼리 도구 선택 (Hexagonal — Pragmatic flavor)
-globs: "**/required/**,**/*Repository.java"
+paths:
+  - "**/required/**"
+  - "**/*Repository.java"
 ---
 
 # Repository 규칙 (Hexagonal — Pragmatic flavor)

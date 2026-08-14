@@ -1,6 +1,8 @@
 ---
 description: Vue.js 고유 컨벤션
-globs: "**/*.vue,**/vite.config.*"
+paths:
+  - "**/*.vue"
+  - "**/vite.config.*"
 ---
 
 # Vue.js 규칙
@@ -47,6 +49,7 @@ globs: "**/*.vue,**/vite.config.*"
 
 - Unit/Integration 테스트는 Vitest + Vue Testing Library(`@testing-library/vue`)를 사용하고, `typescript.md` 6번과 동일하게 테스트 대상 소스와 같은 디렉토리에 colocate한다.
 - 접근성 role/label/텍스트 기반으로 쿼리한다(`typescript.md` 6번과 동일한 원칙). Vue Test Utils의 `wrapper.vm`으로 컴포넌트 내부 상태/메서드를 직접 조작하는 방식은 다른 방법이 마땅치 않을 때만 사용한다.
+- 테스트 데이터 팩토리(Fishery), 랜덤 값 seed 고정, 경계값·`test.each` 규칙은 `typescript.md` 6번을 그대로 따른다.
 
 ## 8. 금지 패턴
 

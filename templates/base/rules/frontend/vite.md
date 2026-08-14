@@ -1,6 +1,10 @@
 ---
 description: Vite + React 고유 컨벤션
-globs: "**/vite.config.*,**/vite-env.d.ts,**/src/routes/**,**/src/features/**"
+paths:
+  - "**/vite.config.*"
+  - "**/vite-env.d.ts"
+  - "**/src/routes/**"
+  - "**/src/features/**"
 ---
 
 # Vite + React 규칙

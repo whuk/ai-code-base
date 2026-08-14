@@ -1,6 +1,9 @@
 ---
 description: Application Service 분리, 역할 포트 구현, stereotype·트랜잭션 규칙 (Hexagonal — Pragmatic flavor, Kotlin)
-globs: "**/provided/**,**/*Service.kt,**/*Finder.kt"
+paths:
+  - "**/provided/**"
+  - "**/*Service.kt"
+  - "**/*Finder.kt"
 ---
 
 # Application Service 클래스 분리 및 트랜잭션 규칙 (Hexagonal — Pragmatic flavor, Kotlin)

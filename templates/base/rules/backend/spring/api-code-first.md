@@ -1,6 +1,11 @@
 ---
 description: 코드-first 웹 계층(Controller·요청/응답 DTO 수기 작성) 규칙 (Pragmatic flavor)
-globs: "**/adapter/webapi/**,**/*Controller.java,**/*Controller.kt,**/*Api.java,**/*Api.kt"
+paths:
+  - "**/adapter/webapi/**"
+  - "**/*Controller.java"
+  - "**/*Controller.kt"
+  - "**/*Api.java"
+  - "**/*Api.kt"
 ---
 
 # 코드-first 웹 계층 규칙 (Pragmatic flavor)

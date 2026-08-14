@@ -1,6 +1,12 @@
 ---
 description: Hexagonal(Ports & Adapters) 패키지 구조, 의존 방향, Port/Adapter 작성 규칙 (Kotlin)
-globs: "**/port/**,**/adapter/**,**/*UseCase.kt,**/*Port.kt,**/*Adapter.kt,**/*Controller.kt"
+paths:
+  - "**/port/**"
+  - "**/adapter/**"
+  - "**/*UseCase.kt"
+  - "**/*Port.kt"
+  - "**/*Adapter.kt"
+  - "**/*Controller.kt"
 ---
 
 # Ports & Adapters 구조 규칙

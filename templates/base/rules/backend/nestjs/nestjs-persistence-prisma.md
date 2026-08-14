@@ -1,6 +1,11 @@
 ---
 description: NestJS 영속성 규칙 — Prisma (생성 타입 ↔ Domain 변환은 Repository 전담, nestjs.md 전제)
-globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.repository.ts"
+paths:
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
+  - "**/*.repository.ts"
 ---
 
 # NestJS 영속성 규칙 — Prisma

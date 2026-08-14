@@ -25,7 +25,7 @@ model: inherit
    | 통합/E2E (Controller) | Jest + Supertest |
 
    전체 애플리케이션 컨텍스트를 불필요하게 올리지 않는다. 필요한 프로바이더만 모듈에 등록한다.
-3. **작성**: 테스트 이름은 동작을 설명한다(`shouldReturnEmptyWhenNoMatch`). **결정적 테스트**로 작성한다(임의 `setTimeout` 대기 대신 Fixture/Factory 함수로 명시적 값을 지정한다). 크리티컬 경로와 엣지 케이스(경계, null, 예외)를 우선한다.
+3. **작성**: 테스트 이름은 동작을 설명한다(`shouldReturnEmptyWhenNoMatch`). **결정적 테스트**로 작성한다(임의 `setTimeout` 대기 대신 Fixture/Factory 함수로 명시적 값을 지정한다). Factory는 Fishery(`Factory.define`)로 정의하고, 랜덤 값이 필요한 필드는 `@faker-js/faker` 병용 시 `faker.seed(...)`를 고정하며, 어서션 대상 필드는 `factory.build({...})` 오버라이드로 명시적으로 고정한다(`nestjs.md` 8번). 크리티컬 경로와 엣지 케이스(경계, null, 예외)를 우선한다. 경계값은 랜덤이 아닌 명시적 값으로 고정하고, 같은 로직의 다중 케이스는 `it.each`/`test.each`로 나열한다.
 4. **검증**: 작성 후 해당 테스트를 실행해 통과를 확인한다.
 
 ## 참조 규칙
@@ -46,4 +46,5 @@ model: inherit
 
 - 테스트를 통과시키기 위해 프로덕션 코드를 바꾸지 않는다. 프로덕션 코드에 결함이 보이면 수정하지 말고 보고한다.
 - 임의 `setTimeout` 대기로 실행 순서나 타임스탬프 차이를 보장하지 않는다.
+- 어서션 대상 필드나 경계값을 랜덤으로 생성하지 않는다. seed 재현 수단 없이 랜덤 데이터를 사용하지 않는다.
 - 자동 커밋하지 않는다.

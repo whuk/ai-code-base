@@ -30,7 +30,8 @@ model: inherit
 3. **작성 원칙에 따라 테스트를 작성한다**:
    - 테스트 이름은 동작을 설명한다(`test_returns_empty_when_no_match` — pytest는 `test_` 접두사 함수만 수집하므로 접두사를 유지한다).
    - **결정적 테스트**: `time.sleep`으로 순서를 보장하지 않는다. `pytest` fixture로 명시적 값을 지정한다.
-   - 크리티컬 경로와 엣지 케이스(경계, null, 예외)를 우선한다.
+   - 랜덤/대량 데이터는 Polyfactory의 factory(`ModelFactory`/`DataclassFactory`)로 생성하되, 어서션 대상 필드는 `build(field=value)` 오버라이드나 fixture로 명시적으로 고정하고, 실패 재현을 위해 factory 클래스에 `__random_seed__`를 고정한다(`fastapi.md` 7번).
+   - 크리티컬 경로와 엣지 케이스(경계, null, 예외)를 우선한다. 경계값은 랜덤이 아닌 명시적 값으로 고정하고, 같은 로직의 다중 케이스는 `pytest.mark.parametrize`로 나열한다.
 4. 작성 후 해당 테스트를 실행해 통과를 확인한다.
 
 ## 참조 규칙
@@ -51,4 +52,5 @@ model: inherit
 
 - 테스트를 통과시키기 위해 프로덕션 코드를 바꾸지 않는다. 프로덕션 코드에 결함이 보이면 수정하지 말고 보고한다.
 - `time.sleep` 등 시간 기반 동기화로 테스트 순서를 보장하지 않는다.
+- 어서션 대상 필드나 경계값을 랜덤으로 생성하지 않는다. seed 재현 수단 없이 랜덤 데이터를 사용하지 않는다.
 - 자동 커밋하지 않는다.

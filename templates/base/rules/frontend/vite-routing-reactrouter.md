@@ -1,6 +1,10 @@
 ---
 description: Vite + React 라우팅 규칙 — React Router (vite.md 전제)
-globs: "**/vite.config.*,**/vite-env.d.ts,**/src/routes/**,**/src/features/**"
+paths:
+  - "**/vite.config.*"
+  - "**/vite-env.d.ts"
+  - "**/src/routes/**"
+  - "**/src/features/**"
 ---
 
 # Vite + React 라우팅 규칙 — React Router

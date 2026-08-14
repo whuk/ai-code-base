@@ -12,7 +12,7 @@ model: opus
 ## 전제
 
 - **Hexagonal(Ports & Adapters) 아키텍처를 전제로 한다.** Layered를 선택한 프로젝트는 `spring-domain-designer`를 사용한다.
-- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Pragmatic flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈)·Instancio, ArchUnit(`archunit.md`).
+- **먼저 이 프로젝트의 hexagonal flavor를 판정한다.** `/rw:init`이 두 flavor 중 하나만 정규 규칙 파일로 남겨 둔다. `hexagonal/domain.md`가 순수 POJO + `{Domain}JpaEntity` 분리를 요구하면 **Clean flavor**, Domain에 `@Entity`를 두고 `application/{agg}/{provided,required}` 패키지와 Spring Data 리포지토리 포트를 쓰면 **Pragmatic flavor**다. **이 문서의 서술이 살아남은 규칙 파일과 어긋나면 항상 규칙 파일이 우선한다.** Pragmatic flavor 요지: Domain=JPA 엔티티(orm.xml), `provided`/`required` 역할 기반 포트, Spring Data 리포지토리=드리븐 포트(별도 PersistenceAdapter/Mapper 없음), 서비스·컨트롤러의 Domain 반환과 애그리거트 간 객체 참조(읽기 전용) 허용, 코드-first 웹(`api-code-first.md`), 애플리케이션 서비스 통합 테스트(Port Mock 대신 실제 빈), ArchUnit(`archunit.md`).
 - **코드를 작성하지 않는다.** read-only 설계 전담이며, 구현은 `spring-hexagonal-tdd-implementer`가 이어받는다.
 - NestJS는 `nestjs-domain-designer`, FastAPI는 `fastapi-domain-designer`, 프론트엔드는 `frontend-architect`를 사용한다.
 

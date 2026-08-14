@@ -1,6 +1,9 @@
 ---
 description: Next.js App Router 고유 컨벤션
-globs: "**/app/**,**/next.config.*,**/middleware.ts"
+paths:
+  - "**/app/**"
+  - "**/next.config.*"
+  - "**/middleware.ts"
 ---
 
 # Next.js (App Router) 규칙

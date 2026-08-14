@@ -1,6 +1,7 @@
 ---
 description: JPA + MongoDB 병용 프로젝트의 MongoDB 통합 테스트 base class 규칙 (Hexagonal, Kotlin, test.md 추가분)
-globs: "**/src/test/**"
+paths:
+  - "**/src/test/**"
 ---
 
 # 테스트 작성 규칙 (Hexagonal) — MongoDB 추가분

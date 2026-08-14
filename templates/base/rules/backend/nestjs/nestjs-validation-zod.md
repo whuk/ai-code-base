@@ -1,6 +1,11 @@
 ---
 description: NestJS 검증 규칙 — Zod(nestjs-zod) (스키마 기반 검증, nestjs.md 전제)
-globs: "**/*.controller.ts,**/*.service.ts,**/*.module.ts,**/*.entity.ts,**/*.repository.ts"
+paths:
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
+  - "**/*.repository.ts"
 ---
 
 # NestJS 검증 규칙 — Zod (nestjs-zod)

@@ -1,6 +1,9 @@
 ---
 description: Application Service(Finder/Service) 클래스 분리, UseCase 구현, 트랜잭션 규칙 (Hexagonal)
-globs: "**/*Service.java,**/*Finder.java,**/*UseCase.java"
+paths:
+  - "**/*Service.java"
+  - "**/*Finder.java"
+  - "**/*UseCase.java"
 ---
 
 # Application Service 클래스 분리 및 트랜잭션 규칙

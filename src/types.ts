@@ -69,7 +69,7 @@ export interface SpringAnswers {
 export interface NestAnswers {
   persistence: NestPersistence;
   validation: NestValidation;
-  /** Fullstack only: frontend source root (report-only glob hint). */
+  /** Fullstack only: frontend source root (report-only paths hint). */
   frontendRoot?: string;
 }
 

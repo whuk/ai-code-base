@@ -1,6 +1,13 @@
 ---
 description: FastAPI 백엔드 고유 컨벤션 (backend/shared/architecture.md 전제, DDD 강제 수준은 완화)
-globs: "**/router.py,**/schemas.py,**/service.py,**/repository.py,**/models.py"
+paths:
+  - "**/router.py"
+  - "**/schemas.py"
+  - "**/service.py"
+  - "**/repository.py"
+  - "**/models.py"
+  - "**/test_*.py"
+  - "**/conftest.py"
 ---
 
 # FastAPI 규칙
@@ -49,6 +56,9 @@ globs: "**/router.py,**/schemas.py,**/service.py,**/repository.py,**/models.py"
 - 라우터 테스트에서 DB 세션 등 의존성 대체는 `app.dependency_overrides`를 사용한다(FastAPI의 공식 테스트 대체 메커니즘). 서비스 내부를 몽키패칭하지 않고 `Depends` 경계에서 대체하며, fixture 종료 시 `dependency_overrides.clear()`로 원복한다.
 - 순수 도메인/서비스 로직은 FastAPI 앱을 띄우지 않고 함수/클래스 단위로 직접 테스트한다.
 - `time.sleep`으로 순서를 보장하지 않는다. `pytest` fixture로 결정적 테스트 데이터를 만든다.
+- 랜덤/대량 테스트 데이터가 필요하면 Polyfactory의 factory(Pydantic 모델은 `ModelFactory`, `dataclass`는 `DataclassFactory`)로 생성한다. `pytest` fixture를 대체하는 도구가 아니라, 검증과 무관한 필드를 채우는 보완 도구로 사용한다.
+- 어서션 대상 필드와 비즈니스 규칙에 관여하는 필드는 랜덤에 맡기지 않고 `build(field=value)` 오버라이드나 fixture로 명시적으로 고정한다. 어서션이 랜덤 값에 의존하면 안 된다. 실패 재현을 위해 factory 클래스에 `__random_seed__`를 고정한다.
+- 경계값(최소/최대, 경계 ±1, 빈 값, 임계점)은 랜덤으로 뽑지 않고 명시적으로 고정한다. 같은 로직을 여러 입력으로 검증할 때는 `pytest.mark.parametrize`로 케이스를 나열하고, 검증 규칙(길이, 범위, 패턴)이 있는 입력은 유효 경계와 무효 경계 양쪽 케이스를 모두 포함한다.
 - DB가 필요한 테스트는 트랜잭션을 테스트마다 롤백하거나 격리된 스키마를 사용해 테스트 간 상태가 새지 않게 한다.
 
 ## 8. 에러 응답 (RFC 9457)

@@ -19,7 +19,7 @@ model: inherit
 
 1. **가정을 먼저 진술한다.** 요구가 모호하면 구현 전에 질문한다. 해석이 여럿이면 모두 제시한다.
 2. **API를 소비할 때는** 백엔드 스펙 변경 여부를 먼저 확인하고, 서버 상태는 TanStack Query로 관리한다.
-3. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Vitest + React Testing Library로 소스와 colocate한다 (`typescript.md` 6번).
+3. **Red**: 작은 기능 증분을 정의하는 실패 테스트를 먼저 작성한다. 테스트 이름은 동작을 설명한다(`shouldRejectDuplicateEmail`). Vitest + React Testing Library로 소스와 colocate한다 (`typescript.md` 6번). 반복 사용되는 테스트 데이터는 Fishery 팩토리로 정의하고, 랜덤 값은 `faker.seed(...)` 고정 후 사용하되 어서션 대상 필드는 `build({...})` 오버라이드로 고정한다. 경계값은 명시 고정하고 다중 케이스는 `test.each`로 나열한다.
 4. **Green**: 통과시키기에 충분한 **최소** 코드만 작성한다.
 5. **Refactor**: Green 상태에서만 리팩터링한다. 한 번에 하나씩, 각 단계 후 테스트 실행.
 6. **결함 수정 시**: 문제를 재현하는 실패 테스트 → 수정 → 통과 확인.

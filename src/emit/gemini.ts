@@ -1,6 +1,6 @@
 // Gemini CLI emitter.
 // - context.md      -> GEMINI.md (+ rules reference section)
-// - rules/**        -> .gemini/rules/** (verbatim; globs frontmatter kept for humans)
+// - rules/**        -> .gemini/rules/** (verbatim; paths frontmatter kept for humans)
 // - commands/**.md  -> .gemini/commands/**.toml (prompt/description)
 // - agents/*.md     -> .gemini/agents/*.md (frontmatter normalized)
 // - settings.json   -> .gemini/settings.json (context.fileName pinned)

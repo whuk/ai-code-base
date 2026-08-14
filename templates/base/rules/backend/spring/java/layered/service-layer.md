@@ -1,6 +1,8 @@
 ---
 description: Service 계층 클래스 분리(Finder/Service) 및 트랜잭션 선언 규칙
-globs: "**/*Service.java,**/*Finder.java"
+paths:
+  - "**/*Service.java"
+  - "**/*Finder.java"
 ---
 
 # Service 계층 클래스 분리 및 트랜잭션 규칙

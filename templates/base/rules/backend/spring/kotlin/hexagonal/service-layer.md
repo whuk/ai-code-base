@@ -1,6 +1,9 @@
 ---
 description: Application Service(Finder/Service) 클래스 분리, UseCase 구현, 트랜잭션 규칙 (Hexagonal, Kotlin)
-globs: "**/*Service.kt,**/*Finder.kt,**/*UseCase.kt"
+paths:
+  - "**/*Service.kt"
+  - "**/*Finder.kt"
+  - "**/*UseCase.kt"
 ---
 
 # Application Service 클래스 분리 및 트랜잭션 규칙
