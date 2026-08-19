@@ -13,7 +13,7 @@
 | Agent | `.claude/agents/*.md` | 서브에이전트 정의 |
 | Meta | `CLAUDE.md`, 이 문서 | frontmatter 없이 Claude에게 지침으로 로드되는 최상위 문서 |
 
-`README.md`는 이 가이드의 적용 대상이 아니다. Claude에게 주는 지침이 아니라 GitHub에서 저장소를 처음 보는 사람에게 보여주는 소개 문서이기 때문에, 번호 매긴 섹션·frontmatter 같은 내부 지침 문서 관행을 강제하지 않고 일반적인 README 관행(뱃지, Quick Start 등)을 자유롭게 따른다. `.claude/statusline.md`도 같은 이유로 적용 대상이 아니다 — Claude에게 로드되는 지침이 아니라 사용자가 복사해서 쓰는 참고 프롬프트 모음이다.
+`README.md`는 이 가이드의 적용 대상이 아니다. Claude에게 주는 지침이 아니라 GitHub에서 저장소를 처음 보는 사람에게 보여주는 소개 문서이기 때문에, 번호 매긴 섹션·frontmatter 같은 내부 지침 문서 관행을 강제하지 않고 일반적인 README 관행(뱃지, Quick Start 등)을 자유롭게 따른다. `.claude/statusline.md`도 같은 이유로 적용 대상이 아니다 — Claude에게 로드되는 지침이 아니라 사용자가 참고하는 도구 설정 가이드다.
 
 ## 2. 공통 원칙 (4가지 유형 모두)
 
