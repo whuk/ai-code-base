@@ -28,6 +28,8 @@ describe("manifest sanity", () => {
     expect(manifest.filter((f) => f.startsWith("rules/")).length).toBe(65);
     expect(manifest).toContain("context.md");
     expect(manifest).toContain("settings.json");
+    expect(manifest).toContain("statusline.md");
+    expect(manifest).toContain("statusline-command.sh");
   });
 });
 
@@ -83,6 +85,34 @@ describe("Claude-only commands are dropped for other targets", () => {
     const r = prune(answersFor("gemini"), manifest);
     expect(r.remove).toContain("commands/rw/plan/plan_clean.md");
     expect(r.notices.join("\n")).toMatch(/plan_clean/);
+  });
+});
+
+describe("Claude-only statusline files are dropped for other targets", () => {
+  const answersFor = (target: Answers["target"]): Answers => ({
+    area: "backend",
+    backend: "fastapi",
+    fastapi: { orm: true, rdb: "PostgreSQL" },
+    target,
+    outputDir: ".",
+  });
+
+  it("keeps the guide and the script for claude", () => {
+    const o = outputs(answersFor("claude"));
+    expect(o).toContain("statusline.md");
+    expect(o).toContain("statusline-command.sh");
+  });
+
+  it.each(["gemini", "codex"] as const)("drops both for %s", (target) => {
+    const o = outputs(answersFor(target));
+    expect(o).not.toContain("statusline.md");
+    expect(o).not.toContain("statusline-command.sh");
+  });
+
+  it("explains the removal in a notice", () => {
+    const r = prune(answersFor("codex"), manifest);
+    expect(r.remove).toContain("statusline-command.sh");
+    expect(r.notices.join("\n")).toMatch(/상태표시줄/);
   });
 });
 

@@ -85,6 +85,8 @@ describe("gemini emit", () => {
     // settings pins context filename
     const settings = JSON.parse(readFileSync(path.join(dir, ".gemini/settings.json"), "utf8"));
     expect(settings.context.fileName).toBe("GEMINI.md");
+    // statusLine is a Claude Code feature: no statusline files leak into .gemini/
+    expect(files.some((f) => f.includes("statusline"))).toBe(false);
   });
 });
 
@@ -108,6 +110,8 @@ describe("codex emit", () => {
     expect(am).toContain(".codex/rules/backend/");
     // emitter returns the home-dir prompts caveat
     expect(notes.some((n) => n.includes("~/.codex/prompts/"))).toBe(true);
+    // statusLine is a Claude Code feature: no statusline files leak into .codex/
+    expect(files.some((f) => f.includes("statusline"))).toBe(false);
   });
 });
 

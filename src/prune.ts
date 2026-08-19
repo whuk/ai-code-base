@@ -19,6 +19,15 @@ const SPRING = `${R}/spring`;
  */
 const CLAUDE_ONLY_COMMANDS = ["commands/rw/plan/plan_clean.md"];
 
+/**
+ * Status line files that only Claude Code can act on.
+ * The line is driven by the `statusLine` field in Claude Code's settings.json,
+ * which hands session data to a shell command on stdin. Gemini CLI and Codex
+ * CLI have no equivalent field, so both the guide and the script it documents
+ * would be inert files in their output tree.
+ */
+const CLAUDE_ONLY_STATUSLINE = ["statusline.md", "statusline-command.sh"];
+
 /** Layered-premise Spring agents (removed when Hexagonal is chosen). */
 const SPRING_LAYERED_AGENTS = [
   "agents/spring-domain-designer.md",
@@ -137,6 +146,10 @@ function pruneByTarget(s: Selector, a: Answers): void {
   s.removeFiles(CLAUDE_ONLY_COMMANDS);
   s.notice(
     "plan_clean 커맨드는 Claude Code의 `~/.claude/plans` 구조를 전제하므로 제외했습니다. 이 도구의 플랜 파일은 다른 경로에 저장됩니다.",
+  );
+  s.removeFiles(CLAUDE_ONLY_STATUSLINE);
+  s.notice(
+    "상태표시줄 설정(statusline.md, statusline-command.sh)은 Claude Code의 `statusLine` 설정 전용이므로 제외했습니다.",
   );
 }
 
