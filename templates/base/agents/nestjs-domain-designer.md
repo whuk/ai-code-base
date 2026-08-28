@@ -27,7 +27,7 @@ model: opus
 5. **모듈/계층 배치**:
    - Write는 Controller(DTO)→Service(Command)→Domain→Repository, Read는 Controller→Query→Repository(Projection)로 흐름을 정한다.
    - `{Domain}Finder`/`{Domain}Service` 프로바이더 분리를 지정한다.
-   - 필요한 Command/Query 클래스와 `class-validator` 데코레이터, 다중 진입점 방어 방식을 나열한다(`nestjs.md` 3번).
+   - 필요한 Command/Query 클래스와 검증 규칙(채택한 `nestjs-validation-*.md` 기준), 다중 진입점 방어 방식을 나열한다(`nestjs.md` 3번).
 6. **Repository 도구 선택**: `nestjs.md` 5번의 escalation ladder에서 **가장 낮은 충분한 단계**를 근거와 함께 고른다. 선제적 상위 선택을 금지한다.
 
 ## 참조 규칙

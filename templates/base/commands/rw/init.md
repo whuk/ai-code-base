@@ -41,8 +41,8 @@ claude-code-base 템플릿을 실제 프로젝트 스택에 맞게 선별 적용
 - 주 RDB: JDBC/R2DBC 드라이버 의존성(`postgresql`/`mysql`/`mariadb`/`sqlite` 등) 또는 `application.yml`·`application.properties`의 datasource/r2dbc URL 스킴
 
 ### NestJS 세부 감지
-- 영속성 도구: `typeorm`/`@nestjs/typeorm` → TypeORM / `prisma`/`@prisma/client` → Prisma / ORM 없이 `kysely` → SQL-first
-- 검증 도구: `nestjs-zod` 존재(또는 `class-validator` 없이 `zod`) → Zod / `class-validator` → class-validator
+- 영속성 도구: `typeorm`/`@nestjs/typeorm` → TypeORM / `prisma`/`@prisma/client` → Prisma / ORM 없이 `kysely` 또는 `drizzle-orm` → SQL-first
+- 검증 도구: `nestjs-zod` 존재, 또는 `class-validator` 없이 `zod`(NestJS 12 Standard Schema 경로 포함) → Zod / `class-validator` → class-validator
 - (풀스택) 프론트엔드 소스 루트: 프론트엔드 프레임워크 의존성이 든 `package.json`이 위치한 디렉토리 경로
 
 ### FastAPI 세부 감지
@@ -97,7 +97,7 @@ claude-code-base 템플릿을 실제 프로젝트 스택에 맞게 선별 적용
 
 (백엔드 스택 "NestJS" 선택 시)
 - "영속성 도구는 무엇을 사용합니까?" → TypeORM / Prisma / 사용 안 함(SQL-first, Kysely)
-- "입력 검증 도구는 무엇을 사용합니까?" → class-validator(기본) / Zod(nestjs-zod)
+- "입력 검증 도구는 무엇을 사용합니까?" → class-validator(기본) / Zod(NestJS 12는 Standard Schema, 11 이하는 nestjs-zod)
 - RDB 질문은 하지 않는다 — `nestjs.md`에 DB 벤더 종속 내용이 없어 답변이 편집으로 이어지지 않는다.
 
 (백엔드 스택 "FastAPI" 선택 시)
@@ -281,7 +281,7 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 ### 백엔드 스택 "NestJS" + 검증 도구 선택 시 — 삭제
 - class-validator 선택 시: `.claude/rules/backend/nestjs/nestjs-validation-zod.md`를 삭제한다 (`nestjs-validation-classvalidator.md`만 남긴다). 검증-무관 핵심인 `nestjs.md`는 그대로 유지한다.
 - Zod 선택 시: `.claude/rules/backend/nestjs/nestjs-validation-classvalidator.md`를 삭제한다 (`nestjs-validation-zod.md`만 남긴다). 검증-무관 핵심인 `nestjs.md`는 그대로 유지한다.
-- **Zod 선택 시 `nestjs-*` 에이전트는 수정하지 않는다.** `nestjs-tdd-implementer`/`nestjs-code-reviewer`/`nestjs-domain-designer`는 class-validator 전제로 작성돼 있다. 4단계 보고 시 이 사실을 사용자에게 명시적으로 알린다: "nestjs 에이전트들은 class-validator 전제입니다. Zod 기준으로 활용하려면 에이전트를 별도로 조정해야 합니다."
+- **Zod 선택 시에도 `nestjs-*` 에이전트는 수정하지 않는다.** 에이전트는 검증 도구를 "채택한 `nestjs-validation-*.md` 기준"으로 참조하도록 작성돼 있어 남긴 검증 파일을 그대로 따른다.
 
 ### 풀스택 + 백엔드 "NestJS" 선택 시 — 보고만 (파일 편집 없음)
 - 백엔드와 프론트엔드가 모두 TypeScript이므로 `frontend/*.md`의 `paths`(`**/*.ts`, `**/*.tsx`)가 백엔드 소스에도 매칭될 수 있다. rw:init은 이 `paths`를 편집하지 않고 원본 그대로 둔다.
@@ -309,7 +309,7 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 
 ## 4단계: 확인 후 실행
 
-1. 삭제/rename 대상 전체 목록을 사용자에게 보여주고 진행 여부를 확인받는다. 분리 파일을 정규 이름으로 맞추는 rename(예: `domain-pure.md` → `domain.md`)이 있으면 그 항목도 함께 표시한다. 1단계에서 자동 확정한 항목이 있으면 항목별 감지 근거(파일 경로·의존성 이름)를 함께 표시해 잘못 감지된 항목을 사용자가 바로잡을 수 있게 한다. NestJS + Zod를 선택한 경우 "nestjs 에이전트들은 class-validator 전제" 안내를 함께 보여준다.
+1. 삭제/rename 대상 전체 목록을 사용자에게 보여주고 진행 여부를 확인받는다. 분리 파일을 정규 이름으로 맞추는 rename(예: `domain-pure.md` → `domain.md`)이 있으면 그 항목도 함께 표시한다. 1단계에서 자동 확정한 항목이 있으면 항목별 감지 근거(파일 경로·의존성 이름)를 함께 표시해 잘못 감지된 항목을 사용자가 바로잡을 수 있게 한다.
 2. **실행 직전에 상태를 다시 확인한다.** 0단계 확인부터 여기까지는 2단계 질문 응답 대기가 끼어 있어 가장 긴 구간이며, 그 사이 다른 세션이나 사용자가 저장소를 건드렸을 수 있다.
    - `git status --short`를 다시 확인한다. 0단계 시점과 달라졌으면 사용자에게 알리고 계속할지 확인받는다.
    - 대상 목록의 각 경로가 실제로 존재하는지 확인한다. **이미 없는 대상은 오류로 보지 않고 건너뛴다** — 이전 `/rw:init` 실행이나 수동 정리로 먼저 삭제됐을 수 있다. 건너뛴 항목은 목록에 남겨 4단계 보고에서 "이미 없어 건너뜀"으로 표시한다.
@@ -342,4 +342,4 @@ Hexagonal + JPA + MVC일 때 선택한 언어 디렉토리(`spring/{java|kotlin}
 - 확정되지 않은 조합을 임의로 판단해서 처리하지 않는다.
 - 이 템플릿이 지원하지 않는 조합(Kotlin + WebFlux)을 감지하고도 조용히 다른 값(MVC)으로 덮어써서 진행하지 않는다. 사용자에게 알리고 확인받는다(1단계·2단계 라운드 3 참조).
 - 근거가 약하거나 상충하는 항목을 추측으로 자동 확정하지 않는다. 미확정으로 남겨 2단계에서 질문한다.
-- rules 파일을 삭제/rename했더라도 전제가 다른 에이전트(`nestjs-*`의 class-validator 전제, `spring-*`의 MongoDB/QueryDSL 언급 등)를 임의로 고치지 않는다(별도 작업). 4단계 보고에서 안내만 한다.
+- rules 파일을 삭제/rename했더라도 전제가 다른 에이전트(`spring-*`의 MongoDB/QueryDSL 언급 등)를 임의로 고치지 않는다(별도 작업). 4단계 보고에서 안내만 한다.

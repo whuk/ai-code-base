@@ -361,9 +361,6 @@ function pruneNest(s: Selector, a: Answers): void {
     s.removeFile(`${R}/nestjs/nestjs-validation-zod.md`);
   } else {
     s.removeFile(`${R}/nestjs/nestjs-validation-classvalidator.md`);
-    s.notice(
-      "nestjs 에이전트들은 class-validator 전제로 작성돼 있습니다. Zod 기준으로 활용하려면 에이전트를 별도로 조정해야 합니다.",
-    );
   }
 
   // Fullstack NestJS: frontend rule paths may match backend TS.

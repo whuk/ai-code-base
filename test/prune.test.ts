@@ -330,7 +330,8 @@ describe("NestJS Prisma + Zod (backend only)", () => {
     expect(o).not.toContain("rules/backend/nestjs/nestjs-validation-classvalidator.md");
     expect([...o].some((f) => f.includes("spring") || f.includes("fastapi"))).toBe(false);
     expect([...o].some((f) => f.startsWith("agents/nestjs-"))).toBe(true);
-    expect(r.notices.some((n) => n.includes("class-validator"))).toBe(true);
+    // #43: nestjs 에이전트가 검증 도구 중립이 되어 class-validator 전제 안내는 더 이상 내지 않는다.
+    expect(r.notices.some((n) => n.includes("class-validator"))).toBe(false);
   });
 });
 
