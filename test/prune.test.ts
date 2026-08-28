@@ -25,7 +25,8 @@ describe("manifest sanity", () => {
   it("extracted the full base template", () => {
     expect(manifest.filter((f) => f.startsWith("agents/")).length).toBe(42);
     expect(manifest.filter((f) => f.startsWith("commands/")).length).toBe(13);
-    expect(manifest.filter((f) => f.startsWith("rules/")).length).toBe(65);
+    expect(manifest.filter((f) => f.startsWith("rules/")).length).toBe(64);
+    expect(manifest.filter((f) => f.startsWith("guides/")).length).toBe(2);
     expect(manifest).toContain("context.md");
     expect(manifest).toContain("settings.json");
     expect(manifest).toContain("statusline.md");
@@ -143,7 +144,7 @@ describe("stack-agnostic review files survive every stack", () => {
 
   it.each(cases)("keeps code-review.md and code-reviewer.md for %s", (_name, a) => {
     const o = outputs(a);
-    expect(o).toContain("rules/code-review.md");
+    expect(o).toContain("guides/code-review.md");
     expect(o).toContain("agents/code-reviewer.md");
   });
 });

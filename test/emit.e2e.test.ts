@@ -123,9 +123,9 @@ describe("codex emit", () => {
 
 describe("stack-agnostic review files", () => {
   it.each([
-    ["claude", [".claude/rules/code-review.md", ".claude/agents/code-reviewer.md", ".claude/commands/rw/git/pr-review.md"]],
-    ["gemini", [".gemini/rules/code-review.md", ".gemini/agents/code-reviewer.md", ".gemini/commands/rw/git/pr-review.toml"]],
-    ["codex", [".codex/rules/code-review.md", ".codex/agents/code-reviewer.toml", ".codex/prompts/rw-git-pr-review.md"]],
+    ["claude", [".claude/guides/code-review.md", ".claude/agents/code-reviewer.md", ".claude/commands/rw/git/pr-review.md"]],
+    ["gemini", [".gemini/guides/code-review.md", ".gemini/agents/code-reviewer.md", ".gemini/commands/rw/git/pr-review.toml"]],
+    ["codex", [".codex/guides/code-review.md", ".codex/agents/code-reviewer.toml", ".codex/prompts/rw-git-pr-review.md"]],
   ] as const)("lands in the %s layout", (target, expected) => {
     const dir = mkdtempSync(path.join(os.tmpdir(), `rw-${target}-review-`));
     emit(target, BASE, dir, prune(springAnswers(target, dir), manifest));

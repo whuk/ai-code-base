@@ -1,5 +1,16 @@
 ---
 description: Controller, Service, Domain 계층 간 데이터 전달 및 DTO/Domain 매핑 규칙
+paths:
+  - "**/*Controller.java"
+  - "**/*Service.java"
+  - "**/*Finder.java"
+  - "**/*Command.java"
+  - "**/*Query.java"
+  - "**/*Request.java"
+  - "**/*Response.java"
+  - "**/*Dto.java"
+  - "**/*Repository*.java"
+  - "**/domain/**"
 ---
 
 # 계층 간 통신 및 DTO/Domain 매핑 규칙

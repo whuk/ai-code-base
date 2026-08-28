@@ -1,6 +1,6 @@
 # .claude 문서 스타일 가이드
 
-`.claude/rules/`, `.claude/commands/`, `.claude/agents/`와 `CLAUDE.md`에 적용되는 공통 문서 포맷을 정의한다. 새 문서를 작성하거나 기존 문서를 수정할 때 이 가이드를 따른다.
+`.claude/rules/`, `.claude/commands/`, `.claude/agents/`와 `CLAUDE.md`, `guides/`에 적용되는 공통 문서 포맷을 정의한다. 새 문서를 작성하거나 기존 문서를 수정할 때 이 가이드를 따른다.
 
 ## 1. 적용 범위와 문서 유형
 
@@ -11,7 +11,7 @@
 | Rule | `.claude/rules/**/*.md` | 코드 작성 규칙, 조건부 로딩(`paths`) 대상 |
 | Command | `.claude/commands/**/*.md` | 슬래시 커맨드 정의 |
 | Agent | `.claude/agents/*.md` | 서브에이전트 정의 |
-| Meta | `CLAUDE.md`, 이 문서 | frontmatter 없이 Claude에게 지침으로 로드되는 최상위 문서 |
+| Meta | `CLAUDE.md`, `guides/*.md`(이 문서 포함) | frontmatter 없이 Claude에게 지침으로 로드되는 최상위 문서 |
 
 `README.md`는 이 가이드의 적용 대상이 아니다. Claude에게 주는 지침이 아니라 GitHub에서 저장소를 처음 보는 사람에게 보여주는 소개 문서이기 때문에, 번호 매긴 섹션·frontmatter 같은 내부 지침 문서 관행을 강제하지 않고 일반적인 README 관행(뱃지, Quick Start 등)을 자유롭게 따른다. `.claude/statusline.md`도 같은 이유로 적용 대상이 아니다 — Claude에게 로드되는 지침이 아니라 사용자가 참고하는 도구 설정 가이드다.
 
