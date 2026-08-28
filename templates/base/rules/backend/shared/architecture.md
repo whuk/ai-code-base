@@ -1,5 +1,15 @@
 ---
 description: 백엔드 스택 공통 아키텍처 원칙 (언어/프레임워크 무관). Spring/NestJS/FastAPI 모두 이 원칙을 전제로 각자 스택에 맞게 구현한다.
+paths:
+  - "**/*.java"
+  - "**/*.kt"
+  - "**/*.py"
+  - "**/*.controller.ts"
+  - "**/*.service.ts"
+  - "**/*.finder.ts"
+  - "**/*.repository.ts"
+  - "**/*.module.ts"
+  - "**/*.entity.ts"
 ---
 
 # 백엔드 공통 아키텍처 원칙

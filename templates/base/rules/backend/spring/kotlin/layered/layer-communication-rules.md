@@ -1,5 +1,16 @@
 ---
 description: Controller, Service, Domain 계층 간 데이터 전달 및 DTO/Domain 매핑 규칙 (Kotlin)
+paths:
+  - "**/*Controller.kt"
+  - "**/*Service.kt"
+  - "**/*Finder.kt"
+  - "**/*Command.kt"
+  - "**/*Query.kt"
+  - "**/*Request.kt"
+  - "**/*Response.kt"
+  - "**/*Dto.kt"
+  - "**/*Repository*.kt"
+  - "**/domain/**"
 ---
 
 # 계층 간 통신 및 DTO/Domain 매핑 규칙

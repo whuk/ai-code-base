@@ -1,5 +1,14 @@
 ---
 description: Spring WebFlux(리액티브 스택) 규칙 — Reactor 타입 경계, 트랜잭션, 블로킹 금지 규율, 테스트 (Layered/Hexagonal 공통)
+paths:
+  - "**/*Controller.java"
+  - "**/*Service.java"
+  - "**/*Finder.java"
+  - "**/*Repository*.java"
+  - "**/*UseCase.java"
+  - "**/*Adapter.java"
+  - "**/*Test.java"
+  - "**/domain/**"
 ---
 
 # Spring WebFlux 규칙 (리액티브 스택)
